@@ -8,6 +8,7 @@ import SearchPage from "./components/SearchPage";
 import CartPage from "./components/CartPage";
 import CheckOutPage from "./components/CheckOutPage";
 import NotFound from "./components/NotFound";
+import './style/backgroundStyle.css';
 
 const App = () => {
     return (
