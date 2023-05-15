@@ -7,17 +7,18 @@ const globalConstantsModule = (function(){
     const FETCH_INIT = "FETCH_INIT"
     const FETCH_SUCCESS = "FETCH_SUCCESS"
     const FETCH_FAILURE = "FETCH_FAILURE"
-    const API_KEY = "a2392eb648abf6ef6103ccd1bf56b8e9"
+    const API_KEY = "?api_key=a2392eb648abf6ef6103ccd1bf56b8e9"
     const SEARCH_BY_NAME = "/search"
-    const SEARCH_SERIES = "/series"
+    const SEARCH_SERIES = "/tv"
     const SEARCH_MOVIE = "/movie"
     const API_URL_PREFIX  = "https://api.themoviedb.org/3"
     const GET_IMAGE_URL_PREFIX = "https://image.tmdb.org/t/p/original"
+    const ADULT_FALSE = "&include_adult=false"
 
 
     return {
         FETCH_INIT, FETCH_SUCCESS,FETCH_FAILURE, API_KEY,SEARCH_BY_NAME, SEARCH_SERIES, SEARCH_MOVIE, API_URL_PREFIX,
-        GET_IMAGE_URL_PREFIX
+        GET_IMAGE_URL_PREFIX, ADULT_FALSE
     }
 })();
 export default globalConstantsModule;

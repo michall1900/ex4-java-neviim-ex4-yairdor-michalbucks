@@ -1,5 +1,5 @@
 import globalConstantsModule from "../utilities/globalConstantsModule";
-import React, {useState, useReducer, useEffect} from "react";
+import {useState, useReducer, useEffect} from "react";
 const SERVER_ERROR_STRING = "Can't login to server. Please try again later."
 const CANT_FIND_SERVER_ERROR_CODE = 500
 const ERROR_MESSAGE = "There is a problem with getting response from the server, please try again later";
@@ -43,7 +43,7 @@ const dataFetchReducer = (state,action)=>{
         case globalConstantsModule.FETCH_SUCCESS:
             return {...state, isLoading: false, error: null, data:action.data};
         case globalConstantsModule.FETCH_FAILURE:
-            return {...state, isLoading: true, error: action.error};
+            return {...state, isLoading: false, error: action.error};
         default:
             throw new Error("Invalid choice for fetch")
     }
@@ -54,22 +54,32 @@ const useDataApi = (initialUrl,initialData, contentToFetch)=>{
     const [fetchState, dispatch] = useReducer(dataFetchReducer, {isLoading: false, error:null, data:initialData})
     useEffect(()=>{
         let didCancel = false
+        console.log(url)
         const fetchData = async ()=>{
+            console.log("Fetch")
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
-                const response = await fetch(initialUrl,contentToFetch)
-                const jsonData = await checkResponse(response)
-                if (!didCancel)
+                const response = await fetch(url,contentToFetch)
+                // console.log(response)
+                // const contentType = response.headers.get('Content-Type');
+                // console.log(contentType);
+                // const responseData = await response.text()
+                // console.log(responseData)
+                if (!didCancel){
+                    const jsonData = await checkResponse(response)
                     dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
+                    console.log(jsonData)
+                }
+
             }
             catch(error){
+                console.log(error)
                 if (!didCancel)
                     dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
-
-
             }
-
         }
+        if(url)
+            fetchData();
         return () => {
             didCancel = true;
         };
