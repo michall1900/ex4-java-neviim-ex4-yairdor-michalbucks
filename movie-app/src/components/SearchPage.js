@@ -1,5 +1,4 @@
 
-import useDataApi from '../hooks/useDataApi';
 import {useReducer} from "react";
 import History from "./History";
 import SearchByAttribute from "./SearchByAttribute";
@@ -9,6 +8,7 @@ const historyReducer = (history,action)=>{
     switch (action.type){
         case "ADD":{
             history.set(action.item.request, action.item.details)
+            console.log(history)
             return history
         }
         case "DELETE":{
@@ -50,26 +50,28 @@ export default function SearchPage(){
                 {(buttonClickedState.isHistoryClicked || buttonClickedState.isAttributeClicked || buttonClickedState.isStringClicked)?
                     (<>
                         <div className={"col-12 text-center my-2"}>
-                            <button className={"btn btn-outline-primary"} onClick={()=>{dispatchButton({type: "MAIN_SEARCH"})}}>
-                                Back to main search page</button>
+                            <button className={"btn btn-outline-primary"}
+                                    onClick={()=>{dispatchButton({type: "MAIN_SEARCH"})}}>
+                                Back to main search page
+                            </button>
                         </div>
                         <div className={"col-12 my-2"}>
                             {(buttonClickedState.isHistoryClicked&& <History/>) ||
                             (buttonClickedState.isAttributeClicked&& <SearchByAttribute/>) ||
-                            (buttonClickedState.isStringClicked&& <SearchByString/>) }
+                            (buttonClickedState.isStringClicked&& <SearchByString dispatchHistory={dispatchHistory}/>) }
                         </div>
                     </>
                         ):
                     (<>
-                        <div className={"col-4 text-center my-2"}>
+                        <div className={"col-12 col-md-4 text-center my-2"}>
                             <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "HISTORY_SEARCH"})}}>
                                 Search from history</button>
                         </div>
-                        <div className={"col-4 text-center my-2"}>
+                        <div className={"col-12 col-md-4 text-center my-2"}>
                             <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "STRING_SEARCH"})}}>
                                 Search by free text</button>
                         </div>
-                        <div className={"col-4 text-center my-2"}>
+                        <div className={"col-12 col-md-4 text-center my-2"}>
                             <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "ATTRIBUTE_SEARCH"})}}>
                                 Search by attributes</button>
                         </div>

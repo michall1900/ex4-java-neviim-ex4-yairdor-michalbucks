@@ -39,9 +39,12 @@ const getErrorMessage = async (response) =>{
 const dataFetchReducer = (state,action)=>{
     switch (action.type){
         case globalConstantsModule.FETCH_INIT:
-            return {...state, isLoading: true, error: null};
-        case globalConstantsModule.FETCH_SUCCESS:
+            return {...state, isLoading: true, error: null, data:null};
+        case globalConstantsModule.FETCH_SUCCESS:{
+            console.log(action)
             return {...state, isLoading: false, error: null, data:action.data};
+        }
+
         case globalConstantsModule.FETCH_FAILURE:
             return {...state, isLoading: false, error: action.error};
         default:
@@ -51,23 +54,18 @@ const dataFetchReducer = (state,action)=>{
 
 const useDataApi = (initialUrl,initialData, contentToFetch)=>{
     const [url,setUrl] = useState(initialUrl);
-    const [fetchState, dispatch] = useReducer(dataFetchReducer, {isLoading: false, error:null, data:initialData})
+    const [fetchState, dispatch] = useReducer(dataFetchReducer, { data:initialData, isLoading: false, error:null})
     useEffect(()=>{
         let didCancel = false
-        console.log(url)
         const fetchData = async ()=>{
             console.log("Fetch")
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
                 const response = await fetch(url,contentToFetch)
-                // console.log(response)
-                // const contentType = response.headers.get('Content-Type');
-                // console.log(contentType);
-                // const responseData = await response.text()
-                // console.log(responseData)
                 if (!didCancel){
                     const jsonData = await checkResponse(response)
                     dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
+                    console.log(fetchState)
                     console.log(jsonData)
                 }
 
