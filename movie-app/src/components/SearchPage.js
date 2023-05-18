@@ -3,7 +3,10 @@ import {useReducer} from "react";
 import History from "./History";
 import SearchByAttribute from "./SearchByAttribute";
 import SearchByString from "./SearchByString";
+import BackToMainSearchButton from "./BackToMainSearchButton";
+import SearchButtons from "./SearchButtons";
 
+const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_from_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
 const historyReducer = (history,action)=>{
     switch (action.type){
         case "ADD":{
@@ -40,42 +43,27 @@ const clickedButtonReducer = (clickedButton, action)=>{
 export default function SearchPage(){
 
     const [history, dispatchHistory] = useReducer(historyReducer, new Map())
-    const [buttonClickedState,dispatchButton] = useReducer(clickedButtonReducer, {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
+    const [buttonClickedState,dispatchButton] = useReducer(clickedButtonReducer,
+        {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
+
     return(
         <div className={"container"}>
             <div className={"row text-center"}>
                 <div className={"col-12 h1 fst-italic fw-bolder my-2"}>
                     Search
                 </div>
-                {(buttonClickedState.isHistoryClicked || buttonClickedState.isAttributeClicked || buttonClickedState.isStringClicked)?
+                {(buttonClickedState.isHistoryClicked || buttonClickedState.isAttributeClicked ||
+                    buttonClickedState.isStringClicked)?
                     (<>
-                        <div className={"col-12 text-center my-2"}>
-                            <button className={"btn btn-outline-primary"}
-                                    onClick={()=>{dispatchButton({type: "MAIN_SEARCH"})}}>
-                                Back to main search page
-                            </button>
-                        </div>
+                        <BackToMainSearchButton dispatchButton={dispatchButton()} dispatchOption={CLICKED_OPTIONS.main}/>
                         <div className={"col-12 my-2"}>
                             {(buttonClickedState.isHistoryClicked&& <History/>) ||
-                            (buttonClickedState.isAttributeClicked&& <SearchByAttribute/>) ||
+                            (buttonClickedState.isAttributeClicked&& <SearchByAttribute dispatchHistory={dispatchHistory}/>) ||
                             (buttonClickedState.isStringClicked&& <SearchByString dispatchHistory={dispatchHistory}/>) }
                         </div>
                     </>
                         ):
-                    (<>
-                        <div className={"col-12 col-md-4 text-center my-2"}>
-                            <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "HISTORY_SEARCH"})}}>
-                                Search from history</button>
-                        </div>
-                        <div className={"col-12 col-md-4 text-center my-2"}>
-                            <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "STRING_SEARCH"})}}>
-                                Search by free text</button>
-                        </div>
-                        <div className={"col-12 col-md-4 text-center my-2"}>
-                            <button className={"btn btn-info"} onClick={()=>{dispatchButton({type: "ATTRIBUTE_SEARCH"})}}>
-                                Search by attributes</button>
-                        </div>
-                    </>)
+                    (<SearchButtons CLICKED_OPTIONS={CLICKED_OPTIONS} dispatchButton={dispatchButton}/>)
                 }
             </div>
         </div>

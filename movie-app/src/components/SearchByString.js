@@ -40,7 +40,7 @@ export default function SearchByString({dispatchHistory}){
             doFetch(url)
             const item = {
                 request: `${url}&page=${page}`,
-                details: `${tvOrMovie}, search query = ${query}, page = ${page}`
+                details: `${tvOrMovie}, search query = ${query}`
             }
             dispatchHistory({type:"ADD", item:item})
         }
