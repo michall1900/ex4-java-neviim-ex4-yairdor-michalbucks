@@ -1,6 +1,6 @@
 import globalConstantsModule from "../utilities/globalConstantsModule";
 import noPicture from "../images/no picture.jpg";
-import LongTextHandler from "./LongTextHandler";
+import LongTextHandler from "./search/LongTextHandler";
 
 export default function MovieAndSeriesItem({value, index}){
     return(
@@ -13,7 +13,7 @@ export default function MovieAndSeriesItem({value, index}){
                     <div className="col-3 col-md-2">
                         <img className="img-fluid"
                              src={(value.poster_path)?globalConstantsModule.GET_IMAGE_URL_PREFIX + value.poster_path: noPicture}
-                             alt={value.posterPath || "alt"+index}/>
+                             alt={value.poster_path || "alt"+index}/>
                     </div>
                     <div className="col-9 col-md-10">
                         <div className="row">
