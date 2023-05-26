@@ -1,11 +1,9 @@
-
 import {useReducer} from "react";
 import History from "../History";
-import SearchByAttribute from "./SearchByAttribute";
+import SearchByAttribute from "./searchAttributes/SearchByAttribute";
 import SearchByString from "./SearchByString";
 import BackToMainSearchButton from "./BackToMainSearchButton";
 import SearchButtons from "./SearchButtons";
-
 
 
 const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_from_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
@@ -40,7 +38,7 @@ export default function SearchPage(){
                     buttonClickedState.isStringClicked)?
                     (<>
                         <BackToMainSearchButton dispatchButton={dispatchButton} dispatchOption={CLICKED_OPTIONS.main}/>
-                        <div className={"col-12 my-2"}>
+                        <div className={"col-12 my-2 my-4"}>
                             {(buttonClickedState.isHistoryClicked&& <History/>) ||
                             (buttonClickedState.isAttributeClicked&& <SearchByAttribute/>) ||
                             (buttonClickedState.isStringClicked&& <SearchByString/>) }

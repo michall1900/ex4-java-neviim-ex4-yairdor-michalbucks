@@ -1,5 +1,5 @@
 import MovieAndSeriesItem from "./MovieAndSeriesItem";
-import PriceRow from "./search/PriceRow";
+import PriceRow from "./PriceRow";
 
 export default function DisplayDataApi({data, isBuyOption}){
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {useHistoryItems} from "../../contexts/HistoryItemsContext";
+import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 export default function SelectPersonTitle({inputs, handleDelete}){
     const {historyItems} = useHistoryItems()

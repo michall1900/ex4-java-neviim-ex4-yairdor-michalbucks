@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/js/bootstrap.bundle";
 import SelectPersonTitle from "./SelectPersonTitle";
 import PersonDropdown from "./PersonDropdown";
-import {useHistoryItems} from "../../contexts/HistoryItemsContext";
+import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 export default function SelectPerson({inputs, setInputs}){
 

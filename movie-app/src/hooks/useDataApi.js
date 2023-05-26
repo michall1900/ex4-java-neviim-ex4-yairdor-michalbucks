@@ -3,6 +3,7 @@ import {useState, useReducer, useEffect} from "react";
 const SERVER_ERROR_STRING = "Can't login to server. Please try again later."
 const CANT_FIND_SERVER_ERROR_CODE = 500
 const ERROR_MESSAGE = "There is a problem with getting response from the server, please try again later";
+
 /**
  * Check the response. If there is an error, it throws it with description.
  * @param response Server's response.
@@ -58,20 +59,16 @@ const useDataApi = (initialUrl,initialData, contentToFetch)=>{
     useEffect(()=>{
         let didCancel = false
         const fetchData = async ()=>{
-            console.log("Fetch")
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
                 const response = await fetch(url,contentToFetch)
                 if (!didCancel){
                     const jsonData = await checkResponse(response)
                     dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
-                    console.log(fetchState)
-                    console.log(jsonData)
                 }
 
             }
             catch(error){
-                console.log(error)
                 if (!didCancel)
                     dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
             }

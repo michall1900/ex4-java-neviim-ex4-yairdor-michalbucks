@@ -1,5 +1,5 @@
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import noPicture from "../../images/no picture.jpg";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import noPicture from "../../../images/no picture.jpg";
 import React from "react";
 
 export default function PersonItem({result, handleSelect}){

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import SelectTvOrMovie from "./SelectTvOrMovie";
-import FreeTextInput from "./FreeTextInput";
-import AttributesInput from "./AttributesInput";
+import FreeTextInput from "./searchByText/FreeTextInput";
+import AttributesInput from "./searchAttributes/AttributesInput";
 
 export default function SearchForm({inputs, setInputs, tvOrMovie, setTvOrMovie,handleSubmit,isByText}){
     const [isValid, setIsValid] = useState("true")

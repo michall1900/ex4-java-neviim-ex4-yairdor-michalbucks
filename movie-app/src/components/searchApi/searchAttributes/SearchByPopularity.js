@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {useHistoryItems} from "../../contexts/HistoryItemsContext";
+import {useState} from "react";
+import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 const POPULARITY_SORT_VALUE = "popularity.desc"
 
@@ -7,23 +7,22 @@ export default function SearchByPopularity({setInputs}){
     const [isByPopularitySort, setPopularitySort] = useState(false);
     const {setHistoryItems} = useHistoryItems()
     const handleCheckboxChange = ()=>{
-        setPopularitySort(!isByPopularitySort)
-    }
-
-    useEffect(()=>{
+        let newByPopularity  = !isByPopularitySort
+        setPopularitySort(newByPopularity)
         let forInput = null
-        if (isByPopularitySort)
+        if (newByPopularity)
             forInput =   POPULARITY_SORT_VALUE
         setInputs((prevInputs)=>
             ({...prevInputs, "sort_by":forInput})
         )
         setHistoryItems((prevHistory)=> {
-            if (isByPopularitySort)
+            if (newByPopularity)
                 return {...prevHistory, "sort by":"popularity in descending order"}
             delete prevHistory["sort by"]
             return prevHistory
         })
-    },[isByPopularitySort, setHistoryItems, setInputs])
+    }
+
 
     return (
         <>

@@ -1,6 +1,6 @@
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import SearchApiDisplay from "./SearchApiDisplay";
-import {HistoryItemsProvider} from "../../contexts/HistoryItemsContext";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import SearchApiDisplay from "../SearchApiDisplay";
+import {HistoryItemsProvider} from "../../../contexts/HistoryItemsContext";
 
 const URL_PREFIX = globalConstantsModule.API_URL_PREFIX + globalConstantsModule.DISCOVER_SEARCH
 export default function SearchByAttribute(){

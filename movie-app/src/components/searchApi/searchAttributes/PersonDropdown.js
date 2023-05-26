@@ -1,10 +1,10 @@
-import Error from "../Error";
-import Spinner from "../Spinner";
+import Error from "../../Error";
+import Spinner from "../../Spinner";
 import PersonItem from "./PersonItem";
 import React, {useEffect} from "react";
-import useDataApi from "../../hooks/useDataApi";
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import {useHistoryItems} from "../../contexts/HistoryItemsContext";
+import useDataApi from "../../../hooks/useDataApi";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 export default function PersonDropdown({setSearchTerm, isDropdownOpen, setDropdownOpen, searchTerm, setInputs}){
     const [{data, isLoading, error}, doFetch] = useDataApi(null,null,null)

@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Error from "../Error";
+import Error from "../../Error";
 import SelectGenre from "./SelectGenre";
 import SelectPerson from "./SelectPerson";
 import SearchByPopularity from "./SearchByPopularity";
@@ -8,11 +8,11 @@ export default function AttributesInput({inputs, setInputs, tvOrMovie, setIsVali
 
     useEffect(()=>{
         if (inputs.with_genres || inputs.with_cast || inputs.sort_by)
-            setIsValid(()=>true)
+            setIsValid(true)
         else
-            setIsValid(()=>false)
+            setIsValid(false)
 
-    },[inputs, setIsValid])
+    },[inputs])
 
 
     return(

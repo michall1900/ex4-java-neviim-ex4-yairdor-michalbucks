@@ -6,13 +6,15 @@ const HistoryContext = createContext();
 const historyReducer = (history, action) => {
     switch (action.type) {
         case 'ADD': {
-            history.set(action.item.request, action.item.details);
-            console.log(history);
-            return history;
+            const newHistory = new Map(history)
+            newHistory.set(action.item.request, action.item.details);
+            console.log(newHistory);
+            return newHistory;
         }
         case 'DELETE': {
-            history.delete(action.item.request);
-            return history;
+            const newHistory = new Map(history)
+            newHistory.delete(action.item.request);
+            return newHistory;
         }
         case 'DELETE_ALL': {
             return new Map();
