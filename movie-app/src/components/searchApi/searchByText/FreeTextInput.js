@@ -10,6 +10,7 @@ export default function FreeTextInput({inputs,setInputs}){
         setHistoryItems ((prevHistory)=>
             ({...prevHistory, [event.target.name]: (event.target.value)})
         )
+
     }
     return(
         <div className="row text-center justify-content-center my-2">

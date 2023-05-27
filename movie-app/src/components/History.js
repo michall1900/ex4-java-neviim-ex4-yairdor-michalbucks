@@ -8,6 +8,7 @@ export default function History(){
     const [searchClicked, setSearchClicked] = useState(false)
     const [url, setUrl] = useState(null)
 
+
     const searchAgain = (request) =>{
         setUrl(request)
         setSearchClicked(true)

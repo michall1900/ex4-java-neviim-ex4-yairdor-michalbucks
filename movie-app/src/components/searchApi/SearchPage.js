@@ -28,6 +28,7 @@ export default function SearchPage(){
     const [buttonClickedState,dispatchButton] = useReducer(clickedButtonReducer,
         {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
 
+
     return(
         <div className={"container"}>
             <div className={"row text-center"}>

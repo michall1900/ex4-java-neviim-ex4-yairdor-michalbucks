@@ -1,4 +1,4 @@
-import useDataApi from "../../hooks/useDataApi";
+import useDataApi from "../../customHooks/useDataApi";
 import {useEffect, useState} from "react";
 import Error from "../Error";
 import DisplayDataApi from "./DisplayDataApi";
@@ -11,18 +11,7 @@ export default function ApiFetchResultsDisplay({url}){
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
 
-    const handlePages =()=>{
-        if (!!data && !!data.results && (!error || !error.length)) {
-            setAllData((prevAllData) => {
-                if (data.page && data.page === 1) {
-                    setMaxPage((data.total_pages)? data.total_pages: 1)
-                    return data.results;
-                } else {
-                    return [...prevAllData, ...data.results];
-                }
-            });
-        }
-    }
+
     const handleLoadMore = ()=>{
         if ((page+1)<=maxPage){
             let newPage = page+1
@@ -41,8 +30,17 @@ export default function ApiFetchResultsDisplay({url}){
     },[url, doFetch])
 
     useEffect(() => {
-        handlePages()
-    }, [data]);
+        if (!!data && !!data.results && (!error || !error.length)) {
+            setAllData((prevAllData) => {
+                if (data.page && data.page === 1) {
+                    setMaxPage((data.total_pages)? data.total_pages: 1)
+                    return data.results;
+                } else {
+                    return [...prevAllData, ...data.results];
+                }
+            });
+        }
+    }, [data, error]);
 
     return(
         <div className="row text-center my-2">

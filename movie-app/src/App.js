@@ -13,21 +13,19 @@ import {HistoryProvider} from "./contexts/HistoryContext";
 
 const App = () => {
     return (
-        <div>
-            <BrowserRouter>
-                <HistoryProvider>
-                    <Routes>
-                        <Route path="/" element={<Menu/>}>
-                            <Route index element={<HomePage/>}/>
-                            <Route path="/search" element={<SearchPage/>}/>
-                            <Route path="/cart" element={<CartPage/>}/>
-                            <Route path="/checkout" element={<CheckOutPage/>}/>
-                            <Route path={"*"} element={<NotFound/>}/>
-                        </Route>
-                    </Routes>
-                </HistoryProvider>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <HistoryProvider>
+                <Routes>
+                    <Route path="/" element={<Menu/>}>
+                        <Route index element={<HomePage/>}/>
+                        <Route path="/search" element={<SearchPage/>}/>
+                        <Route path="/cart" element={<CartPage/>}/>
+                        <Route path="/checkout" element={<CheckOutPage/>}/>
+                        <Route path={"*"} element={<NotFound/>}/>
+                    </Route>
+                </Routes>
+            </HistoryProvider>
+        </BrowserRouter>
     );
 };
 

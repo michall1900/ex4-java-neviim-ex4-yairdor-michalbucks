@@ -22,7 +22,6 @@ export default function SelectPerson({inputs, setInputs}){
                     setDropdownOpen(true);
                 if (!clickedInsideDropdown)
                     setDropdownOpen(false);
-                console.log("DropDown " + isDropdownOpen)
             }
         };
         document.addEventListener("click", handleClickOutside);
@@ -31,7 +30,6 @@ export default function SelectPerson({inputs, setInputs}){
         };
 
     }, []);
-
 
     const handleDelete = (event)=>{
         event.stopPropagation();

@@ -6,6 +6,7 @@ const POPULARITY_SORT_VALUE = "popularity.desc"
 export default function SearchByPopularity({setInputs}){
     const [isByPopularitySort, setPopularitySort] = useState(false);
     const {setHistoryItems} = useHistoryItems()
+
     const handleCheckboxChange = ()=>{
         let newByPopularity  = !isByPopularitySort
         setPopularitySort(newByPopularity)

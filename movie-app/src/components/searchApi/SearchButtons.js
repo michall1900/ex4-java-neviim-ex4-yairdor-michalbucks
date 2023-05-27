@@ -5,7 +5,7 @@ export default function SearchButtons({CLICKED_OPTIONS, dispatchButton}){
         return afterReplace
     }
     return(
-        [...Object.entries(CLICKED_OPTIONS)].map((value, index)=>
+        [...Object.entries(CLICKED_OPTIONS)].map((value)=>
 
             value[0]!== "main" &&
             <div className={"col-12 col-md-4 text-center my-5"} key={value[0]}>

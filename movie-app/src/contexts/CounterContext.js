@@ -1,14 +1,14 @@
 import React, {createContext, useState} from 'react';
 
-const HistoryItemContext = createContext();
+const CounterContext = createContext();
 
-const HistoryItemsProvider = ({ children }) => {
-    const [historyItems, setHistoryItems] = useState({})
-    const value = {historyItems, setHistoryItems}
+const CounterProvider = ({ children }) => {
+    const [cartCount, setCartCount] = useState({})
+    const value = {cartCount, setCartCount}
     return (
-        <HistoryItemContext.Provider value={value}>
+        <CounterContext.Provider value={value}>
             {children}
-        </HistoryItemContext.Provider>
+        </CounterContext.Provider>
     );
 };
 

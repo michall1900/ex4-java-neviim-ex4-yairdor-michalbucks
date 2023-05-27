@@ -1,6 +1,7 @@
 import ApiFetchResultsDisplay from "../ApiFetchResultsDisplay";
 
 export default function HistorySearchAgainDisplay({setSearchClicked, url}){
+
     return(
         <>
             <div className="col-12 my-2">

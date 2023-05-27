@@ -78,7 +78,7 @@ const useDataApi = (initialUrl,initialData, contentToFetch)=>{
         return () => {
             didCancel = true;
         };
-    }, [url])
+    }, [url, contentToFetch])
     return [fetchState, setUrl]
 }
 

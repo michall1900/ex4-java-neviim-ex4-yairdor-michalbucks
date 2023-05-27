@@ -3,6 +3,7 @@ import {useHistory} from "../../../contexts/HistoryContext";
 import HistoryListItem from "./HistoryListItem";
 
 export default function HistoryListPageDisplay({searchAgain}){
+
     const {history, dispatchHistory} = useHistory()
     return(
         <>

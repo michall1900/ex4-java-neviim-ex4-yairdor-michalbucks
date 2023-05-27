@@ -1,25 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Select from 'react-select';
-import useDataApi from "../../../hooks/useDataApi";
+import useDataApi from "../../../customHooks/useDataApi";
 import globalConstantsModule from "../../../utilities/globalConstantsModule";
 import Error from "../../Error";
 import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
-const SelectGenre = ({setInputs, tvOrMovie, setIsValid}) => {
+const SelectGenre = ({setInputs, tvOrMovie}) => {
     const [{data, isLoading, error}, doFetch] = useDataApi(null,null,null)
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [labels, setLabels] = useState([])
 
     const {setHistoryItems} = useHistoryItems()
 
-    useEffect(()=>{
+    const getGenres = useCallback(()=>{
         if (tvOrMovie){
             let genrePath = (tvOrMovie==="Movies")? globalConstantsModule.MOVIE_GENRE_LIST_PATH:
                 globalConstantsModule.SERIES_GENRE_LIST_PATH
             doFetch(`${globalConstantsModule.API_URL_PREFIX}${genrePath}${globalConstantsModule.API_KEY}`)
             //doFetch(`${globalConstantsModule.API_URL_PREFIX}`)
         }
-    },[tvOrMovie])
+    },[tvOrMovie, doFetch])
+
+    useEffect(()=>{
+        getGenres();
+    },[getGenres])
 
     useEffect(()=>{
         if(data&& data.genres)
@@ -48,7 +52,8 @@ const SelectGenre = ({setInputs, tvOrMovie, setIsValid}) => {
             return prevHistory
         })
 
-    },[selectedGenres])
+
+    },[selectedGenres, setHistoryItems, setInputs])
 
     return (
 

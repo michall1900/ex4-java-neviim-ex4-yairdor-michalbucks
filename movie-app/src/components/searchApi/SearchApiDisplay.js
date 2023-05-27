@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import globalConstantsModule from "../../utilities/globalConstantsModule";
 import SearchForm from "./SearchForm";
 import {useHistory} from "../../contexts/HistoryContext";
@@ -30,23 +30,25 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
             `&${params.toString()}`)
     }
 
-
+    const makeHistoryItem = useCallback(()=>{
+        console.log("New history item")
+        const objectString =
+            Object.entries(historyItems)
+                .map(([key, value]) => `${key} = ${value}`)
+                .join(', ');
+        return {
+            request: `${url}`,
+            details: `${tvOrMovie}, ${objectString}`
+        }
+    },[ tvOrMovie, url, historyItems])
 
     useEffect(()=>{
-        const makeHistoryItem = ()=>{
-            const objectString =
-                Object.entries(historyItems)
-                    .map(([key, value]) => `${key} = ${value}`)
-                    .join(', ');
-            return {
-                request: `${url}`,
-                details: `${tvOrMovie}, ${objectString}`
-            }
-        }
+
 
         if (url)
             dispatchHistory({type:"ADD", item:makeHistoryItem()})
-    },[url])
+    },[url, dispatchHistory, makeHistoryItem])
+
 
 
 

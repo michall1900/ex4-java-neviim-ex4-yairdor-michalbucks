@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import Error from "../../Error";
 import SelectGenre from "./SelectGenre";
 import SelectPerson from "./SelectPerson";
@@ -6,13 +6,17 @@ import SearchByPopularity from "./SearchByPopularity";
 
 export default function AttributesInput({inputs, setInputs, tvOrMovie, setIsValid, isValid}){
 
-    useEffect(()=>{
-        if (inputs.with_genres || inputs.with_cast || inputs.sort_by)
-            setIsValid(true)
+    const handleValidation = useCallback(() => {
+        if (Array.from(Object.values(inputs)).some((val)=>!!val))
+            setIsValid(true);
         else
-            setIsValid(false)
+            setIsValid(false);
+    }, [inputs, setIsValid]);
 
-    },[inputs])
+
+    useEffect(() => {
+        handleValidation();
+    }, [handleValidation]);
 
 
     return(

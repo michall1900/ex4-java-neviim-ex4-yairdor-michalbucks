@@ -3,6 +3,7 @@ export default function PriceRow({itemData}){
         console.log("Buy")
         console.log(itemData)
     }
+
     return(
         <div className="row my-2">
             <div className="col-10 text-bolder text-end">

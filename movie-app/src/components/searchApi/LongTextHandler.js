@@ -3,7 +3,7 @@ import {useState} from "react";
 const MAX_CHARACTERS = 100
 export default function LongTextHandler({content}){
     const [isAllText, setIsAllText] = useState(false)
-    const partOfContent = content.slice(0, MAX_CHARACTERS)
+    const partOfContent = !!content? content.slice(0, MAX_CHARACTERS): ""
     return(
         content?
         <>
