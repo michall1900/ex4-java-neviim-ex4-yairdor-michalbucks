@@ -1,8 +1,10 @@
 export default function SearchButtons({CLICKED_OPTIONS, dispatchButton}){
     const returnChangeKey = (key)=>{
         let afterReplace = key.replaceAll("_"," ")
-        afterReplace[0].toUpperCase()
-        return afterReplace
+        return afterReplace.split(' ').map(function (word) {
+            return (word.charAt(0).toUpperCase() + word.slice(1));
+        }).join(' ');
+
     }
     return(
         [...Object.entries(CLICKED_OPTIONS)].map((value)=>

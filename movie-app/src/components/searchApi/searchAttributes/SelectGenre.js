@@ -6,7 +6,7 @@ import Error from "../../Error";
 import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 const SelectGenre = ({setInputs, tvOrMovie}) => {
-    const [{data, isLoading, error}, doFetch] = useDataApi(null,null,null)
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null)
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [labels, setLabels] = useState([])
 
@@ -17,9 +17,10 @@ const SelectGenre = ({setInputs, tvOrMovie}) => {
             let genrePath = (tvOrMovie==="Movies")? globalConstantsModule.MOVIE_GENRE_LIST_PATH:
                 globalConstantsModule.SERIES_GENRE_LIST_PATH
             doFetch(`${globalConstantsModule.API_URL_PREFIX}${genrePath}${globalConstantsModule.API_KEY}`)
+            setFetchTrigger(true)
             //doFetch(`${globalConstantsModule.API_URL_PREFIX}`)
         }
-    },[tvOrMovie, doFetch])
+    },[tvOrMovie, doFetch, setFetchTrigger])
 
     useEffect(()=>{
         getGenres();

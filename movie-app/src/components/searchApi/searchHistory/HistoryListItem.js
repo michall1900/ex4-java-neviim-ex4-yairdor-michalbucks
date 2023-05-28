@@ -6,7 +6,7 @@ export default function HistoryListItem({searchAgain, request, details, index}){
     const {dispatchHistory} = useHistory()
     return(
         <li className="list-group-item" key={`history.${index}`}>
-            <div className="row">
+            <div className="row" key={`historyRow.${index}`}>
                 <div className="col-12">
                     {details}
                 </div>

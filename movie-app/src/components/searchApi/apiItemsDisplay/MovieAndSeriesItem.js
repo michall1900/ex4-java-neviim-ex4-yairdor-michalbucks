@@ -1,5 +1,5 @@
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import noPicture from "../../images/no picture.jpg";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import noPicture from "../../../images/no picture.jpg";
 import LongTextHandler from "./LongTextHandler";
 
 export default function MovieAndSeriesItem({value, index}){

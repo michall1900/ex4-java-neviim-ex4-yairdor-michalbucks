@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import SearchForm from "./SearchForm";
-import {useHistory} from "../../contexts/HistoryContext";
-import {useHistoryItems} from "../../contexts/HistoryItemsContext";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import SearchForm from "../SearchForm";
+import {useHistory} from "../../../contexts/HistoryContext";
+import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 import ApiFetchResultsDisplay from "./ApiFetchResultsDisplay";
 
 export default function SearchApiDisplay({urlPrefix, isByText}){
@@ -31,7 +31,6 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
     }
 
     const makeHistoryItem = useCallback(()=>{
-        console.log("New history item")
         const objectString =
             Object.entries(historyItems)
                 .map(([key, value]) => `${key} = ${value}`)

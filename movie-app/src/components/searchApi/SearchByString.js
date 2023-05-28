@@ -1,6 +1,6 @@
 
 import globalConstantsModule from "../../utilities/globalConstantsModule";
-import SearchApiDisplay from "./SearchApiDisplay";
+import SearchApiDisplay from "./apiItemsDisplay/SearchApiDisplay";
 import {HistoryItemsProvider} from "../../contexts/HistoryItemsContext";
 
 const URL_PREFIX = globalConstantsModule.API_URL_PREFIX + globalConstantsModule.SEARCH_BY_NAME

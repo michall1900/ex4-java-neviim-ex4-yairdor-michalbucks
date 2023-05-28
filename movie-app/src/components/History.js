@@ -14,7 +14,6 @@ export default function History(){
         setSearchClicked(true)
     }
 
-
     return(
         <>
             <h3>

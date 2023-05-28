@@ -16,7 +16,6 @@ export default function SelectPerson({inputs, setInputs}){
             const dropdownContainer = document.querySelector(".dropdown");
             if(dropdownContainer){
                 const clickedInsideDropdown = dropdownContainer.contains(event.target);
-                console.log(clickedInsideDropdown)
                 const classList = event.target.classList
                 if (classList && classList.contains("dropdown-toggle"))
                     setDropdownOpen(true);

@@ -10,20 +10,23 @@ import CheckOutPage from "./components/CheckOutPage";
 import NotFound from "./components/NotFound";
 import './style/backgroundStyle.css';
 import {HistoryProvider} from "./contexts/HistoryContext";
+import {CounterProvider} from "./contexts/CounterContext";
 
 const App = () => {
     return (
         <BrowserRouter>
             <HistoryProvider>
-                <Routes>
-                    <Route path="/" element={<Menu/>}>
-                        <Route index element={<HomePage/>}/>
-                        <Route path="/search" element={<SearchPage/>}/>
-                        <Route path="/cart" element={<CartPage/>}/>
-                        <Route path="/checkout" element={<CheckOutPage/>}/>
-                        <Route path={"*"} element={<NotFound/>}/>
-                    </Route>
-                </Routes>
+                <CounterProvider>
+                    <Routes>
+                        <Route path="/" element={<Menu/>}>
+                            <Route index element={<HomePage/>}/>
+                            <Route path="/search" element={<SearchPage/>}/>
+                            <Route path="/cart" element={<CartPage/>}/>
+                            <Route path="/checkout" element={<CheckOutPage/>}/>
+                            <Route path={"*"} element={<NotFound/>}/>
+                        </Route>
+                    </Routes>
+                </CounterProvider>
             </HistoryProvider>
         </BrowserRouter>
     );

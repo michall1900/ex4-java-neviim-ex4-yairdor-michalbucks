@@ -8,7 +8,6 @@ const historyReducer = (history, action) => {
         case 'ADD': {
             const newHistory = new Map(history)
             newHistory.set(action.item.request, action.item.details);
-            console.log(newHistory);
             return newHistory;
         }
         case 'DELETE': {

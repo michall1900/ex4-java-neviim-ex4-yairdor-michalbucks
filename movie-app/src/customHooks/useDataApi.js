@@ -42,10 +42,8 @@ const dataFetchReducer = (state,action)=>{
         case globalConstantsModule.FETCH_INIT:
             return {...state, isLoading: true, error: null, data:null};
         case globalConstantsModule.FETCH_SUCCESS:{
-            console.log(action)
             return {...state, isLoading: false, error: null, data:action.data};
         }
-
         case globalConstantsModule.FETCH_FAILURE:
             return {...state, isLoading: false, error: action.error};
         default:
@@ -53,15 +51,18 @@ const dataFetchReducer = (state,action)=>{
     }
 }
 
-const useDataApi = (initialUrl,initialData, contentToFetch)=>{
+const useDataApi = (initialUrl,initialData, initialContent)=>{
     const [url,setUrl] = useState(initialUrl);
     const [fetchState, dispatch] = useReducer(dataFetchReducer, { data:initialData, isLoading: false, error:null})
+    const [content, setContent] = useState(initialContent)
+    const [fetchTrigger, setFetchTrigger] = useState(false);
+
     useEffect(()=>{
         let didCancel = false
         const fetchData = async ()=>{
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
-                const response = await fetch(url,contentToFetch)
+                const response = await fetch(url,content)
                 if (!didCancel){
                     const jsonData = await checkResponse(response)
                     dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
@@ -72,14 +73,20 @@ const useDataApi = (initialUrl,initialData, contentToFetch)=>{
                 if (!didCancel)
                     dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
             }
+            finally {
+                setFetchTrigger(false)
+            }
         }
-        if(url)
+        console.log(url, fetchTrigger)
+        if(!!url&& fetchTrigger)
             fetchData();
+
         return () => {
             didCancel = true;
         };
-    }, [url, contentToFetch])
-    return [fetchState, setUrl]
+    }, [url, content, fetchTrigger])
+
+    return [fetchState, setUrl, setFetchTrigger, setContent]
 }
 
 export default useDataApi;

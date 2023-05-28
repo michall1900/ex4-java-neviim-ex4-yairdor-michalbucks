@@ -1,4 +1,4 @@
-import ApiFetchResultsDisplay from "../ApiFetchResultsDisplay";
+import ApiFetchResultsDisplay from "../apiItemsDisplay/ApiFetchResultsDisplay";
 
 export default function HistorySearchAgainDisplay({setSearchClicked, url}){
 

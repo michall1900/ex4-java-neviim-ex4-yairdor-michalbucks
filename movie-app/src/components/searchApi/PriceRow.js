@@ -1,8 +1,8 @@
-export default function PriceRow({itemData}){
-    const handleBuy = () => {
-        console.log("Buy")
-        console.log(itemData)
-    }
+
+import AddToCartButton from "./AddToCartButton";
+
+export default function PriceRow({itemData, setIsClicked, isInCart}){
+
 
     return(
         <div className="row my-2">
@@ -10,7 +10,7 @@ export default function PriceRow({itemData}){
                 Price : 3.99$
             </div>
             <div className="col-2 text-end">
-                <button className="btn btn-primary btn-sm" onClick={handleBuy}>Buy</button>
+                <AddToCartButton isInCart={isInCart} itemData={itemData} setIsClicked={setIsClicked}/>
             </div>
         </div>
     )

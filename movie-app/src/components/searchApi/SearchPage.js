@@ -4,9 +4,10 @@ import SearchByAttribute from "./searchAttributes/SearchByAttribute";
 import SearchByString from "./SearchByString";
 import BackToMainSearchButton from "./BackToMainSearchButton";
 import SearchButtons from "./SearchButtons";
+import CounterDisplay from "../CounterDisplay";
 
 
-const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_from_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
+const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
 
 
 const clickedButtonReducer = (clickedButton, action)=>{
@@ -29,12 +30,14 @@ export default function SearchPage(){
         {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
 
 
+
     return(
         <div className={"container"}>
             <div className={"row text-center"}>
                 <div className={"col-12 h1 fst-italic fw-bolder my-2"}>
                     Search
                 </div>
+                <CounterDisplay/>
                 {(buttonClickedState.isHistoryClicked || buttonClickedState.isAttributeClicked ||
                     buttonClickedState.isStringClicked)?
                     (<>

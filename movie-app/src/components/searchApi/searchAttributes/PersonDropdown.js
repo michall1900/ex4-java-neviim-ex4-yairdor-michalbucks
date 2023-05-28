@@ -7,14 +7,15 @@ import globalConstantsModule from "../../../utilities/globalConstantsModule";
 import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 
 export default function PersonDropdown({setSearchTerm, isDropdownOpen, setDropdownOpen, searchTerm, setInputs}){
-    const [{data, isLoading, error}, doFetch] = useDataApi(null,null,null)
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null)
     const {setHistoryItems} = useHistoryItems()
 
     const fetchData = useCallback(()=>{
         doFetch(`${globalConstantsModule.API_URL_PREFIX}${globalConstantsModule.SEARCH_BY_NAME}`+
             `${globalConstantsModule.PERSON_PATH}${globalConstantsModule.API_KEY}`+
             `${globalConstantsModule.ADULT_FALSE}&query=${encodeURI(searchTerm)}`)
-    },[searchTerm, doFetch])
+        setFetchTrigger(true)
+    },[searchTerm, doFetch, setFetchTrigger])
 
 
     useEffect(()=>{

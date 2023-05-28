@@ -3,7 +3,6 @@ import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
 export default function FreeTextInput({inputs,setInputs}){
     const {setHistoryItems} = useHistoryItems()
     const handleChange =(event)=>{
-        console.log(encodeURIComponent(event.target.value))
         setInputs((values)=>
             ({...values, [event.target.name]:(event.target.value)})
         )
