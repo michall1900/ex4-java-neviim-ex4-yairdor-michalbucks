@@ -11,11 +11,11 @@ export default function AddToCartButton({isInCart, itemData, setIsClicked}){
     const makeAddBody = (itemData)=> {
         return {
             id:itemData.id,
-            name:itemData.original_name ?? itemData.original_title ?? "Unknown",
-            overview:itemData.overview ?? "Unknown",
-            date:itemData.first_air_date ?? itemData.release_date ??"Unknown",
+            name:itemData.name?? itemData.title ?? itemData.original_name ?? itemData.original_title ?? "",
+            overview:itemData.overview ?? "",
+            date:itemData.first_air_date ?? itemData.release_date ?? "",
             posterPath: (itemData.poster_path)? globalConstantsModule.GET_IMAGE_URL_PREFIX+itemData.poster_path: noPicture,
-            popularity:itemData.popularity ?? "Unknown"
+            popularity:itemData.popularity ?? ""
         }
     }
     useEffect(()=>{

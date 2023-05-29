@@ -6,7 +6,7 @@ export default function MovieAndSeriesItem({value, index}){
     return(
         <div className="row text-break " key={"item." + index}>
             <div className="col-12 my-2 h4 text-start">
-                {value.original_name ?? value.original_title ?? value.name?? "Unknown"}
+                {value.name?? value.title ??value.original_name ?? value.original_title ?? "Unknown"}
             </div>
             <div className="col-12">
                 <div className="row">

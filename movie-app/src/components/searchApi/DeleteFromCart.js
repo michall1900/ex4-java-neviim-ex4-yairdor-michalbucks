@@ -7,7 +7,6 @@ export default function DeleteFromCart({itemData, setIsClicked}){
 
     useEffect(()=>{
         if (!!data && !error){
-            console.log("Ask again for all data")
             setIsClicked(true)
         }
 

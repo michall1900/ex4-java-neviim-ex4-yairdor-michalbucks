@@ -3,12 +3,11 @@ import {useCartCounterProvider} from "../contexts/CounterContext";
 import CheckoutForm from "./CheckoutForm";
 import Error from "./Error";
 import Spinner from "./Spinner";
-import useDataApi from "../customHooks/useDataApi";
 
 export default function CheckOutPage(){
 
     const {isLoading, error ,setFetchAgain, cartCount} = useCartCounterProvider();
-    const [isAfterPurchase, setIsAfterPurchase] = useState(true)
+    const [isAfterPurchase, setIsAfterPurchase] = useState(false)
 
     useEffect(()=>{
         setFetchAgain(true)

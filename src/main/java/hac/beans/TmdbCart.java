@@ -82,7 +82,7 @@ public class TmdbCart implements Serializable {
         readWriteLock.writeLock().lock();
         if (this.getNumberOfItems() ==0){
             readWriteLock.writeLock().unlock();
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The cart is already empty");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The cart is empty");
         }
         this.cart = new HashMap<>();
         readWriteLock.writeLock().unlock();

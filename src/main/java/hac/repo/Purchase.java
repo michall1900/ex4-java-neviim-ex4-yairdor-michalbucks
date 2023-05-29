@@ -4,9 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
+
 import java.io.Serializable;
 
 /**
@@ -20,13 +19,16 @@ public class Purchase implements Serializable {
     private Long id;
 
     @NotEmpty(message = "First name is mandatory")
+    @Size(max=30, message = "First name's length should be under 30")
     private String firstName;
 
     @NotEmpty(message = "Last name is mandatory")
+    @Size(max=30, message = "Last name's length should be under 30")
     private String lastName;
 
     @NotEmpty(message = "Email is mandatory")
     @Email(message = "Email should be valid")
+    @Size(max=30, message = "email's length should be under 30")
     private String email;
 
     @PositiveOrZero(message = "Payment must be positive or zero")

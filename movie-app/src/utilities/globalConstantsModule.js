@@ -15,7 +15,7 @@ const globalConstantsModule = (function(){
     const PERSON_PATH = "/person"
     const API_URL_PREFIX  = "https://api.themoviedb.org/3"
     const GET_IMAGE_URL_PREFIX = "https://image.tmdb.org/t/p/original"
-    const ADULT_FALSE = "&include_adult=false"
+    const REQUIRED_PARAMS = "&include_adult=false&language=en-US"
     const MOVIE_GENRE_LIST_PATH = "/genre/movie/list"
     const SERIES_GENRE_LIST_PATH = "/genre/tv/list"
     const WITH_GENRE_KEY = "with_genres"
@@ -23,7 +23,7 @@ const globalConstantsModule = (function(){
 
     return {
         FETCH_INIT, FETCH_SUCCESS,FETCH_FAILURE, API_KEY,SEARCH_BY_NAME, SEARCH_SERIES, SEARCH_MOVIE, API_URL_PREFIX,
-        GET_IMAGE_URL_PREFIX, ADULT_FALSE, DISCOVER_SEARCH, MOVIE_GENRE_LIST_PATH, SERIES_GENRE_LIST_PATH,
+        GET_IMAGE_URL_PREFIX, ADULT_FALSE: REQUIRED_PARAMS, DISCOVER_SEARCH, MOVIE_GENRE_LIST_PATH, SERIES_GENRE_LIST_PATH,
         WITH_GENRE_KEY, PERSON_PATH, ITEM_PRICE
     }
 })();
