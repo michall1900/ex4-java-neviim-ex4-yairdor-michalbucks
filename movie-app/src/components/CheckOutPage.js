@@ -3,13 +3,16 @@ import {useCartCounterProvider} from "../contexts/CounterContext";
 import CheckoutForm from "./CheckoutForm";
 import Error from "./Error";
 import Spinner from "./Spinner";
+import useDataApi from "../customHooks/useDataApi";
 
 export default function CheckOutPage(){
 
     const {isLoading, error ,setFetchAgain, cartCount} = useCartCounterProvider();
+    const [isAfterPurchase, setIsAfterPurchase] = useState(true)
 
     useEffect(()=>{
         setFetchAgain(true)
+
     },[setFetchAgain])
 
     return(
@@ -26,9 +29,10 @@ export default function CheckOutPage(){
                             </>
                         )
                         :
-                        ((!!cartCount && cartCount>0)? <CheckoutForm/>:
+                        ((!!cartCount && cartCount>0)? <CheckoutForm setIsAfterPurchase={setIsAfterPurchase} setFetchAgain={setFetchAgain}/>:
                             <span className="fw-bold h4 my-5">
-                            "The cart is empty. Come back to this page after you pick some movies and/or series."
+                            {isAfterPurchase? "Thank you for buying!" :
+                                "The cart is empty. Come back to this page after you pick some movies and/or series."}
                         </span>)}
                 </div>
             </div>

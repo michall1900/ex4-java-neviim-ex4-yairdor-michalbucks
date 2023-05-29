@@ -1,21 +1,39 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useCartCounterProvider} from "../contexts/CounterContext";
 import globalConstantsModule from "../utilities/globalConstantsModule";
+import useDataApi from "../customHooks/useDataApi";
+import Spinner from "./Spinner";
+import Error from "./Error";
 
-export default function CheckoutForm (){
+export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain}){
     const {cartCount} = useCartCounterProvider();
     const [inputs, setInputs] = useState({})
-
+    const [{ data, isLoading, error}, doFetch, setFetchTrigger, setContent] = useDataApi()
     const handelInputChange = (event)=>{
         const {name, value} = event.target
         setInputs((prevInputs)=>(
             {...prevInputs, [name]:value}
         ))
     }
+
+    useEffect(()=>{
+        if(!!data) {
+            setIsAfterPurchase(true)
+            setFetchAgain(true)
+        }
+    },[data,setIsAfterPurchase, setFetchAgain])
+
     const handelSubmit = (event)=>{
         event.preventDefault()
-        console.log("HEREEE")
-        console.log(inputs)
+        setContent({
+            method: "Post",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputs)
+        })
+        setFetchTrigger(true)
+        doFetch("/api/purchase")
     }
     return(
         <>
@@ -45,6 +63,10 @@ export default function CheckoutForm (){
                     </div>
                 </div>
             </form>
+            <span className="my-2">
+                <Spinner isLoading={isLoading} isSmall={true}/>
+                <Error error={error}/>
+            </span>
         </>
     )
 }
