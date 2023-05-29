@@ -15,10 +15,8 @@ const CounterProvider = ({ children }) => {
 
 
     useEffect(()=>{
-        if (!!data && !error){
-
-            setCartCount(+data)
-
+        if (!error){
+            setCartCount(!!data? +data:0)
         }
 
     },[data,error])

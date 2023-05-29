@@ -1,9 +1,9 @@
 import useDataApi from "../../../customHooks/useDataApi";
 import {useEffect, useState} from "react";
 import Error from "../../Error";
-import DisplayDataApi from "./DisplayDataApi";
 import Spinner from "../../Spinner";
 import LoadMoreButton from "./LoadMoreButton";
+import DisplayApiOnSearch from "../DisplayDataApiOnSearch";
 
 export default function ApiFetchResultsDisplay({url}){
     const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(url,null,null)
@@ -48,7 +48,7 @@ export default function ApiFetchResultsDisplay({url}){
         <div className="row text-center my-2">
             <div className="col-12 my-2">
                 <Error error={error}/>
-                <DisplayDataApi itemsData={allData} isBuyOption={true}/>
+                <DisplayApiOnSearch itemsData={allData} isBuyOption={true}/>
                 <Spinner isLoading={isLoading}/>
             </div>
             <LoadMoreButton handleLoadMore={handleLoadMore} page={page} maxPage={maxPage} allData={allData}/>

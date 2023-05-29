@@ -2,13 +2,18 @@ package hac;
 
 import hac.repo.Purchase;
 import hac.repo.PurchaseRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This code is for debugging purposes only.
@@ -29,6 +34,8 @@ public class DebugController {
 
     @PostMapping("/purchases")
     public Purchase addPurchase(Purchase purchase) {
-        return repository.save(purchase); // this is a JPA method to save a purchase to the database
+        return repository.save(purchase);
     }
+
+
 }

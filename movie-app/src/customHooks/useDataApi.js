@@ -40,7 +40,7 @@ const getErrorMessage = async (response) =>{
 const dataFetchReducer = (state,action)=>{
     switch (action.type){
         case globalConstantsModule.FETCH_INIT:
-            return {...state, isLoading: true, error: null, data:null};
+            return {...state, isLoading: true, error: null};
         case globalConstantsModule.FETCH_SUCCESS:{
             return {...state, isLoading: false, error: null, data:action.data};
         }

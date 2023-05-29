@@ -2,11 +2,11 @@ import DeleteItemButton from "../DeleteItemButton";
 import SearchAgainButton from "./SearchAgainButton";
 import {useHistory} from "../../../contexts/HistoryContext";
 
-export default function HistoryListItem({searchAgain, request, details, index}){
+export default function HistoryListItem({searchAgain, request, details}){
     const {dispatchHistory} = useHistory()
     return(
-        <li className="list-group-item" key={`history.${index}`}>
-            <div className="row" key={`historyRow.${index}`}>
+        <li className="list-group-item">
+            <div className="row">
                 <div className="col-12">
                     {details}
                 </div>

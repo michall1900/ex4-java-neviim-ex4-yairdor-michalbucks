@@ -1,16 +1,20 @@
 
 import AddToCartButton from "./AddToCartButton";
+import DeleteFromCart from "./DeleteFromCart";
+import DisplayPrice from "../DisplayPrice";
 
-export default function PriceRow({itemData, setIsClicked, isInCart}){
+export default function PriceRow({itemData, setIsClicked, isInCart, isBuyOption}){
 
 
     return(
         <div className="row my-2">
-            <div className="col-10 text-bolder text-end">
-                Price : 3.99$
-            </div>
-            <div className="col-2 text-end">
-                <AddToCartButton isInCart={isInCart} itemData={itemData} setIsClicked={setIsClicked}/>
+            <DisplayPrice/>
+            <div className="col-4 text-end">
+                {isBuyOption?
+                    <AddToCartButton isInCart={isInCart} itemData={itemData} setIsClicked={setIsClicked}/>:
+                    <DeleteFromCart itemData={itemData} setIsClicked={setIsClicked}/>
+                }
+
             </div>
         </div>
     )

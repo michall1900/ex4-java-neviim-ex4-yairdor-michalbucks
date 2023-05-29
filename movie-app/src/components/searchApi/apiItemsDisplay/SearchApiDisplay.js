@@ -10,6 +10,7 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
     const [tvOrMovie, setTvOrMovie] = useState("")
     const [inputs, setInputs] = useState({})
     const {historyItems} = useHistoryItems()
+    const [isSubmittedFirstTime, setIsSubmittedFirstTime] = useState(false)
 
     const {dispatchHistory} = useHistory()
 
@@ -28,9 +29,11 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
         let tvOrMoviePath = (tvOrMovie==="Movies")? globalConstantsModule.SEARCH_MOVIE: globalConstantsModule.SEARCH_SERIES
         setUrl(urlPrefix + tvOrMoviePath + globalConstantsModule.API_KEY+ globalConstantsModule.ADULT_FALSE +
             `&${params.toString()}`)
+        setIsSubmittedFirstTime(true)
     }
 
     const makeHistoryItem = useCallback(()=>{
+        console.log(tvOrMovie)
         const objectString =
             Object.entries(historyItems)
                 .map(([key, value]) => `${key} = ${value}`)
@@ -42,12 +45,14 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
     },[ tvOrMovie, url, historyItems])
 
     useEffect(()=>{
-
-
-        if (url)
+        if (url && isSubmittedFirstTime){
             dispatchHistory({type:"ADD", item:makeHistoryItem()})
-    },[url, dispatchHistory, makeHistoryItem])
+            setIsSubmittedFirstTime(false)
+        }
 
+
+
+    },[url, isSubmittedFirstTime, dispatchHistory, makeHistoryItem])
 
 
 

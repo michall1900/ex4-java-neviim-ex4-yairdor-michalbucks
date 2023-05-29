@@ -19,11 +19,12 @@ const globalConstantsModule = (function(){
     const MOVIE_GENRE_LIST_PATH = "/genre/movie/list"
     const SERIES_GENRE_LIST_PATH = "/genre/tv/list"
     const WITH_GENRE_KEY = "with_genres"
+    const ITEM_PRICE = 3.99
 
     return {
         FETCH_INIT, FETCH_SUCCESS,FETCH_FAILURE, API_KEY,SEARCH_BY_NAME, SEARCH_SERIES, SEARCH_MOVIE, API_URL_PREFIX,
         GET_IMAGE_URL_PREFIX, ADULT_FALSE, DISCOVER_SEARCH, MOVIE_GENRE_LIST_PATH, SERIES_GENRE_LIST_PATH,
-        WITH_GENRE_KEY, PERSON_PATH
+        WITH_GENRE_KEY, PERSON_PATH, ITEM_PRICE
     }
 })();
 export default globalConstantsModule;

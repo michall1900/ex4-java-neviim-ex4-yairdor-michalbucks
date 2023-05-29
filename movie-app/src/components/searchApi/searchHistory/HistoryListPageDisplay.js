@@ -13,7 +13,7 @@ export default function HistoryListPageDisplay({searchAgain}){
             <div className="col-12 text-start my-2">
                 <ul className="list-group">
                     {Array.from(history.entries()).reverse().map(([request, details], index)=>
-                        <HistoryListItem request={request} details={details} searchAgain={searchAgain} index={index}/>
+                        <HistoryListItem request={request} details={details} searchAgain={searchAgain} key={`history.${index}`}/>
                     )}
                 </ul>
             </div>
