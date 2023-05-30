@@ -1,5 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react';
-import useDataApi from "../customHooks/useDataApi";
+import useDataApi from "../custom_hooks/useDataApi";
 
 const CounterContext = createContext();
 

@@ -1,6 +1,6 @@
 import {Link, Outlet} from "react-router-dom";
 import NavbarIcon from "./NavbarIcon";
-import CartWithBadge from "./searchApi/CartWithBadge";
+import CartWithBadge from "./cart_page/CartWithBadge";
 
 export default function Menu(){
 
