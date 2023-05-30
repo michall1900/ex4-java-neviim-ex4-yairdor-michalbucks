@@ -10,6 +10,7 @@ export default function SelectTvOrMovie({tvOrMovie, setTvOrMovie}){
         <select className="form-select"
             value={(tvOrMovie)|| ""}
             onChange = {(event)=>{setTvOrMovie(event.target.value)}}
+            name="tvOrMovie"
             required>
             <option value="" disabled>Choose - Series/ Movies</option>
             <option value="Series">Series</option>
