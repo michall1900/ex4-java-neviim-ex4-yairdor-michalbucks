@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Error from "../../Error";
 import Spinner from "../../Spinner";
 import LoadMoreButton from "./LoadMoreButton";
-import DisplayApiOnSearch from "../DisplayDataApiOnSearch";
+import DisplayReferringIds from "../DisplayReferringIds";
 
 /**
  * This component is handle with the display of tmdb items including the error messages/ the loading display and load
@@ -63,7 +63,7 @@ export default function TmdbApiFetchResultsDisplay({url}){
         <div className="row text-center my-2">
             <div className="col-12 my-2">
                 <Error error={error}/>
-                <DisplayApiOnSearch itemsData={allData} isBuyOption={true}/>
+                <DisplayReferringIds itemsData={allData} isBuyOption={true}/>
                 <Spinner isLoading={isLoading}/>
             </div>
             <LoadMoreButton handleLoadMore={handleLoadMore} page={page} maxPage={maxPage} allData={allData}/>

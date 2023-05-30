@@ -3,6 +3,17 @@ import SelectTvOrMovie from "./SelectTvOrMovie";
 import FreeTextInput from "./search_by_text/FreeTextInput";
 import AttributesInput from "./search_attributes/AttributesInput";
 
+/**
+ * This component is displaying the search forms.
+ * @param inputs - The inputs that needs to be set.
+ * @param setInputs - A setter for those inputs.
+ * @param tvOrMovie - A state that telling if user chose tv or movie search.
+ * @param setTvOrMovie - A setter to the tv or movie search.
+ * @param handleSubmit - A function that is handling with the submitting.
+ * @param isByText - Telling if the form needs to let the user insert its data from free text or by attributes.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SearchForm({inputs, setInputs, tvOrMovie, setTvOrMovie,handleSubmit,isByText}){
     const [isValid, setIsValid] = useState("true")
     return(

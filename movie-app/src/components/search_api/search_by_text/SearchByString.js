@@ -1,9 +1,14 @@
 
-import globalConstantsModule from "../../utilities/globalConstantsModule";
-import SearchTmdbApiDisplay from "./api_items_display/SearchTmdbApiDisplay";
-import {HistoryItemsProvider} from "../../contexts/HistoryItemsContext";
+import globalConstantsModule from "../../../utilities/globalConstantsModule";
+import SearchTmdbApiDisplay from "../api_items_display/SearchTmdbApiDisplay";
+import {HistoryItemsProvider} from "../../../contexts/HistoryItemsContext";
 
 const URL_PREFIX = globalConstantsModule.API_URL_PREFIX + globalConstantsModule.SEARCH_BY_NAME
+/**
+ * This component is setting the parameters for search by text display.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SearchByString(){
 
 

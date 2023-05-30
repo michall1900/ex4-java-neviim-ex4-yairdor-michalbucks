@@ -3,6 +3,15 @@ import AddToCartButton from "./AddToCartButton";
 import DeleteFromCart from "../cart_page/DeleteFromCart";
 import DisplayPrice from "../DisplayPrice";
 
+/**
+ * This component is handle with displaying the price's row - price with delete button/ add button.
+ * @param itemData
+ * @param setIsClicked
+ * @param isInCart
+ * @param isBuyOption
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function PriceRow({itemData, setIsClicked, isInCart, isBuyOption}){
 
 

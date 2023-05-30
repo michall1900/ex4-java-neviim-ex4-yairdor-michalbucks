@@ -1,7 +1,7 @@
 import {useReducer} from "react";
 import History from "./search_history/History";
 import SearchByAttribute from "./search_attributes/SearchByAttribute";
-import SearchByString from "./SearchByString";
+import SearchByString from "./search_by_text/SearchByString";
 import BackToMainSearchButton from "./BackToMainSearchButton";
 import SearchButtons from "./SearchButtons";
 import CounterDisplay from "../CounterDisplay";
@@ -9,7 +9,12 @@ import CounterDisplay from "../CounterDisplay";
 
 const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
 
-
+/**
+ * A dispatcher that is telling which button pressed.
+ * @param clickedButton - The current state
+ * @param action - The wanted state.
+ * @returns {{isHistoryClicked: boolean, isStringClicked: boolean, isAttributeClicked: boolean}}
+ */
 const clickedButtonReducer = (clickedButton, action)=>{
     switch(action.type){
         case 'MAIN_SEARCH':
@@ -24,12 +29,15 @@ const clickedButtonReducer = (clickedButton, action)=>{
             throw new Error("Invalid clicked button choice")
     }
 }
+/**
+ * This component display the search's buttons.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SearchPage(){
 
     const [buttonClickedState,dispatchButton] = useReducer(clickedButtonReducer,
         {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
-
-
 
     return(
         <div className={"container"}>

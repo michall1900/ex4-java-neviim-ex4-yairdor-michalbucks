@@ -1,4 +1,16 @@
+/**
+ * This component is handle with search buttons' display
+ * @param CLICKED_OPTIONS An array of the options.
+ * @param dispatchButton A dispatcher that receiving the options.
+ * @returns {unknown[]}
+ * @constructor
+ */
 export default function SearchButtons({CLICKED_OPTIONS, dispatchButton}){
+    /**
+     * This function is order the keys' names
+     * @param key - a key name - string when words seperated with "_" character.
+     * @returns {string}
+     */
     const returnChangeKey = (key)=>{
         let afterReplace = key.replaceAll("_"," ")
         return afterReplace.split(' ').map(function (word) {

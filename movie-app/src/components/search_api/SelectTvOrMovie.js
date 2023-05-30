@@ -1,3 +1,10 @@
+/**
+ * This component is displaying the tv or movie select.
+ * @param tvOrMovie - The value of tv/movie.
+ * @param setTvOrMovie - A setter to tv/movie
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SelectTvOrMovie({tvOrMovie, setTvOrMovie}){
     return(
         <select className="form-select"
