@@ -8,16 +8,17 @@ const historyReducer = (history, action) => {
         case 'ADD': {
             const newHistory = new Map(history)
             newHistory.set(action.item.request, action.item.details);
-            console.log(newHistory)
+            console.log("history add - ", action.item.request, action.item.details)
             return newHistory;
         }
         case 'DELETE': {
             const newHistory = new Map(history)
             newHistory.delete(action.item.request);
-            console.log(newHistory)
+            console.log("history delete - ", action.item.request)
             return newHistory;
         }
         case 'DELETE_ALL': {
+            console.log("History click")
             return new Map();
         }
         default:

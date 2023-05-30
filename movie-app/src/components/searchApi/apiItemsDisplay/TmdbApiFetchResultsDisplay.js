@@ -5,7 +5,13 @@ import Spinner from "../../Spinner";
 import LoadMoreButton from "./LoadMoreButton";
 import DisplayApiOnSearch from "../DisplayDataApiOnSearch";
 
-export default function ApiFetchResultsDisplay({url}){
+/**
+ * This component is handle with the display of tmdb items and the algorithm of each
+ * @param url
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export default function TmdbApiFetchResultsDisplay({url}){
     const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(url,null,null)
     const [allData, setAllData] = useState(null)
     const [page, setPage] = useState(1)

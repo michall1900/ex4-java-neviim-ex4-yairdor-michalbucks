@@ -1,10 +1,12 @@
 package hac;
 
+import hac.beans.PurchaseRequest;
 import hac.beans.TmdbCart;
 import hac.beans.TmdbItem;
 import hac.repo.Purchase;
 import hac.repo.PurchaseRepository;
 import jakarta.annotation.Resource;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,34 +17,55 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+
     @Autowired
     private PurchaseRepository repository;
     @Resource(name="newTmdbCart")
     private TmdbCart cartSession;
 
+    @Resource(name="getDbLock")
+    private ReentrantReadWriteLock dbLock;
+
     @GetMapping(value = "/purchase")
     public List<Purchase> showPurchases() {
-        return repository.findAll();
+        try {
+            dbLock.readLock().lock();
+            return repository.findAll();
+        }
+        finally {
+            dbLock.readLock().unlock();
+        }
     }
 
-    @PostMapping(value = "/purchase")
-    public Purchase addPurchase(@Valid @RequestBody Purchase purchase) {
-        Purchase savedPurchase = purchase;
-        purchase.setPayment(cartSession.getNumberOfItems() * 3.99);
-        if (cartSession.getNumberOfItems() > 0)
-            savedPurchase =  repository.save(purchase);
-        cartSession.emptyCart(); // will fail and throw exception because the cart is empty.
-        return savedPurchase;
 
+    @PostMapping(value = "/purchase")
+    public Purchase addPurchase(@Valid @RequestBody PurchaseRequest purchaseRequest) {
+        Purchase savedPurchase = purchaseRequest.getPurchase();
+        savedPurchase.setPayment(cartSession.getNumberOfItems() * 3.99);
+        try{
+            dbLock.writeLock().lock();
+            cartSession.getReadWriteLock().writeLock().lock();
+            if (cartSession.getNumberOfItems() > 0) {
+                if (!purchaseRequest.areIdsEqual(cartSession.getCartIds()))
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Your cart is not synchronized with the one in the server");
+                savedPurchase = repository.save(savedPurchase);
+            }
+            cartSession.emptyCart(); // will fail and throw exception if the cart is empty.
+        }
+        finally{
+            if(cartSession.getReadWriteLock().isWriteLockedByCurrentThread())
+                cartSession.getReadWriteLock().writeLock().unlock();
+            dbLock.writeLock().unlock();
+        }
+        return savedPurchase;
     }
 
     @PostMapping(value="/cart")
@@ -53,7 +76,6 @@ public class ApiController {
 
     @GetMapping(value="/cart")
     public HashMap<String, TmdbItem> showCart(){
-        System.out.println("Controller 1 cartSession Instance ID: " + System.identityHashCode(cartSession));
         return this.cartSession.getCart();
     }
 
@@ -81,13 +103,27 @@ public class ApiController {
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex){
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errorsMap = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errorsMap.put(fieldName, errorMessage);
+        });
+
+        return errorsMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Map<String, String> handleValidationExceptions(ConstraintViolationException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+        constraintViolations.forEach((violation) -> {
+            String propertyName = violation.getPropertyPath().toString();
+            String errorMessage = violation.getMessage();
+            errorsMap.put(propertyName, errorMessage);
         });
 
         return errorsMap;

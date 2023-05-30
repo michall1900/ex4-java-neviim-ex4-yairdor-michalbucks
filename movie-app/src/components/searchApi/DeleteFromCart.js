@@ -17,7 +17,7 @@ export default function DeleteFromCart({itemData, setIsClicked}){
     }
     const handleIconHover = () => {
         if (error) {
-            return error + "You can try again.";
+            return error + ". Try again later..";
         }
         return '';
     };

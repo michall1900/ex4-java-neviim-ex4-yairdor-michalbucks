@@ -4,7 +4,10 @@ import hac.beans.TmdbCart;
 import hac.beans.TmdbItem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Configuration
 public class BeanConfiguration {
@@ -18,5 +21,11 @@ public class BeanConfiguration {
     @SessionScope
     public TmdbCart newTmdbCart(){
         return new TmdbCart();
+    }
+
+    @Bean
+    @Scope
+    public ReentrantReadWriteLock getDbLock(){
+        return new ReentrantReadWriteLock();
     }
 }

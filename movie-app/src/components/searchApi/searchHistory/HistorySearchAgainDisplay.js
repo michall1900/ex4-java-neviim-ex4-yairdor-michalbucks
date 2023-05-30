@@ -1,4 +1,4 @@
-import ApiFetchResultsDisplay from "../apiItemsDisplay/ApiFetchResultsDisplay";
+import TmdbApiFetchResultsDisplay from "../apiItemsDisplay/TmdbApiFetchResultsDisplay";
 
 export default function HistorySearchAgainDisplay({setSearchClicked, url}){
 
@@ -10,7 +10,7 @@ export default function HistorySearchAgainDisplay({setSearchClicked, url}){
                 </button>
             </div>
             <div className="col-12 text-center my-2">
-                <ApiFetchResultsDisplay url={url}/>
+                <TmdbApiFetchResultsDisplay url={url}/>
             </div>
         </>
     )

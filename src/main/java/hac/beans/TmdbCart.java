@@ -13,18 +13,22 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class TmdbCart implements Serializable {
     private HashMap<String, TmdbItem> cart;
 
-    private ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private ReentrantReadWriteLock readWriteLock;
 
     public TmdbCart(){
         this.cart = new HashMap<>();
+        this.readWriteLock = new ReentrantReadWriteLock();
     }
 
 
     public HashMap<String, TmdbItem> getCart(){
         readWriteLock.readLock().lock();
-        HashMap<String, TmdbItem> currentCart = cart;
-        readWriteLock.readLock().unlock();
-        return currentCart;
+        try{
+            return cart;
+        }
+        finally {
+            readWriteLock.readLock().unlock();
+        }
     }
 
     public void setCart(HashMap<String, TmdbItem> newCart){
@@ -34,11 +38,19 @@ public class TmdbCart implements Serializable {
     }
 
     public ReentrantReadWriteLock getReadWriteLock(){
-        return this.readWriteLock;
+        readWriteLock.readLock().lock();
+        try {
+            return this.readWriteLock;
+        }
+        finally {
+            readWriteLock.readLock().unlock();
+        }
     }
 
     public void setReadWriteLock(ReentrantReadWriteLock newReadWriteLock){
+        readWriteLock.writeLock().lock();
         this.readWriteLock = newReadWriteLock;
+        readWriteLock.writeLock().unlock();
     }
 
     public void add (TmdbItem newItem){
@@ -52,20 +64,27 @@ public class TmdbCart implements Serializable {
     }
 
     public int getNumberOfItems(){
-        if (!readWriteLock.isWriteLockedByCurrentThread()) {
+        if (!readWriteLock.isWriteLockedByCurrentThread())
             readWriteLock.readLock().lock();
-            int size =  this.cart.size();
-            readWriteLock.readLock().unlock();
-            return size;
+        try{
+            return this.cart.size();
         }
-        return this.cart.size();
+        finally {
+            if (!readWriteLock.isWriteLockedByCurrentThread())
+                readWriteLock.readLock().unlock();
+        }
     }
 
     public Set<String> getCartIds(){
-        readWriteLock.readLock().lock();
-        Set<String> keys = this.cart.keySet();
-        readWriteLock.readLock().unlock();
-        return keys;
+        if (!readWriteLock.isWriteLockedByCurrentThread())
+            readWriteLock.readLock().lock();
+        try{
+            return this.cart.keySet();
+        }
+        finally {
+            if (!readWriteLock.isWriteLockedByCurrentThread())
+                readWriteLock.readLock().unlock();
+        }
     }
 
     public void deleteItem(String id){
@@ -79,7 +98,8 @@ public class TmdbCart implements Serializable {
     }
 
     public void emptyCart(){
-        readWriteLock.writeLock().lock();
+        if (!readWriteLock.isWriteLockedByCurrentThread())
+            readWriteLock.writeLock().lock();
         if (this.getNumberOfItems() ==0){
             readWriteLock.writeLock().unlock();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The cart is empty");
@@ -89,12 +109,14 @@ public class TmdbCart implements Serializable {
     }
 
     private boolean isItemExist(String id){
-        if (!readWriteLock.isWriteLockedByCurrentThread()) {
+        if (!readWriteLock.isWriteLockedByCurrentThread())
             readWriteLock.readLock().lock();
-            boolean answer =  this.cart.get(id)!= null;
-            readWriteLock.readLock().unlock();
-            return answer;
+        try{
+            return this.cart.get(id)!= null;
         }
-        return this.cart.get(id)!= null;
+        finally {
+            if (!readWriteLock.isWriteLockedByCurrentThread())
+                readWriteLock.readLock().unlock();
+        }
     }
 }

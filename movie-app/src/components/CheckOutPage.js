@@ -8,10 +8,10 @@ export default function CheckOutPage(){
 
     const {isLoading, error ,setFetchAgain, cartCount} = useCartCounterProvider();
     const [isAfterPurchase, setIsAfterPurchase] = useState(false)
+    const [stayingError, setStayingError] = useState("")
 
     useEffect(()=>{
         setFetchAgain(true)
-
     },[setFetchAgain])
 
     return(
@@ -28,7 +28,10 @@ export default function CheckOutPage(){
                             </>
                         )
                         :
-                        ((!!cartCount && cartCount>0)? <CheckoutForm setIsAfterPurchase={setIsAfterPurchase} setFetchAgain={setFetchAgain}/>:
+                        ((!!cartCount && cartCount>0)? <CheckoutForm setIsAfterPurchase={setIsAfterPurchase}
+                                                                     setFetchAgain={setFetchAgain}
+                                                                     setStayingError={setStayingError}
+                                                                     stayingError={stayingError}/>:
                             <span className="fw-bold h4 my-5">
                             {isAfterPurchase? "Thank you for buying!" :
                                 "The cart is empty. Come back to this page after you pick some movies and/or series."}

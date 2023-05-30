@@ -20,11 +20,13 @@ const globalConstantsModule = (function(){
     const SERIES_GENRE_LIST_PATH = "/genre/tv/list"
     const WITH_GENRE_KEY = "with_genres"
     const ITEM_PRICE = 3.99
+    const NOT_SYNCHRONIZED_ERROR = "Your cart is not synchronized with the one in the server"
+    const CART_EMPTY_ERROR = "The cart is empty"
 
     return {
         FETCH_INIT, FETCH_SUCCESS,FETCH_FAILURE, API_KEY,SEARCH_BY_NAME, SEARCH_SERIES, SEARCH_MOVIE, API_URL_PREFIX,
         GET_IMAGE_URL_PREFIX, ADULT_FALSE: REQUIRED_PARAMS, DISCOVER_SEARCH, MOVIE_GENRE_LIST_PATH, SERIES_GENRE_LIST_PATH,
-        WITH_GENRE_KEY, PERSON_PATH, ITEM_PRICE
+        WITH_GENRE_KEY, PERSON_PATH, ITEM_PRICE, NOT_SYNCHRONIZED_ERROR
     }
 })();
 export default globalConstantsModule;

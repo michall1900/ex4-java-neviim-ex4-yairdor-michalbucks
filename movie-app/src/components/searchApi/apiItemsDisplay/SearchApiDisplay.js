@@ -3,7 +3,7 @@ import globalConstantsModule from "../../../utilities/globalConstantsModule";
 import SearchForm from "../SearchForm";
 import {useHistory} from "../../../contexts/HistoryContext";
 import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
-import ApiFetchResultsDisplay from "./ApiFetchResultsDisplay";
+import TmdbApiFetchResultsDisplay from "./TmdbApiFetchResultsDisplay";
 
 export default function SearchApiDisplay({urlPrefix, isByText}){
     const [url, setUrl] = useState(null)
@@ -60,7 +60,7 @@ export default function SearchApiDisplay({urlPrefix, isByText}){
         <>
             <SearchForm setTvOrMovie={setTvOrMovie} tvOrMovie={tvOrMovie} handleSubmit={handleSubmit} isByText={isByText}
                         inputs={inputs} setInputs={setInputs}/>
-            <ApiFetchResultsDisplay url={url}/>
+            <TmdbApiFetchResultsDisplay url={url}/>
         </>
 
     )

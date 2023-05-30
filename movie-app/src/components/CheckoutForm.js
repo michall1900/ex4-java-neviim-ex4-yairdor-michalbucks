@@ -1,3 +1,4 @@
+import useCartApi from "../customHooks/useCartApi";
 import {useEffect, useState} from "react";
 import {useCartCounterProvider} from "../contexts/CounterContext";
 import globalConstantsModule from "../utilities/globalConstantsModule";
@@ -5,10 +6,18 @@ import useDataApi from "../customHooks/useDataApi";
 import Spinner from "./Spinner";
 import Error from "./Error";
 
-export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain}){
+
+export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain, setStayingError, stayingError}){
     const {cartCount} = useCartCounterProvider();
     const [inputs, setInputs] = useState({})
     const [{ data, isLoading, error}, doFetch, setFetchTrigger, setContent] = useDataApi()
+    const {data:cartIdsAnswer, isLoading:isLoadingCartIds, error:errorCartIds, dispatchCartOperation} = useCartApi()
+    console.log(error)
+    useEffect(()=>{
+        console.log("RENDERRRR")
+        dispatchCartOperation({type:"GET_IDS"})
+    },[dispatchCartOperation])
+
     const handelInputChange = (event)=>{
         const {name, value} = event.target
         setInputs((prevInputs)=>(
@@ -18,19 +27,33 @@ export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain}){
 
     useEffect(()=>{
         if(!!data) {
+            console.log("hello")
             setIsAfterPurchase(true)
             setFetchAgain(true)
         }
     },[data,setIsAfterPurchase, setFetchAgain])
 
+    useEffect(()=>{
+        if (!!error && error.includes(globalConstantsModule.NOT_SYNCHRONIZED_ERROR)){
+            console.log("Includes!")
+            dispatchCartOperation({type:"GET_IDS"})
+            setFetchAgain(true);
+            setStayingError(error + ". Trying to fetch again data..");
+        }
+        else if(!!error){
+            setStayingError("")
+        }
+    },[error, dispatchCartOperation, setFetchAgain])
+
     const handelSubmit = (event)=>{
         event.preventDefault()
+        console.log(JSON.stringify({"purchase":(inputs), "ids":(cartIdsAnswer)}))
         setContent({
             method: "Post",
             headers:{
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(inputs)
+            body: JSON.stringify({"purchase": inputs, "ids":cartIdsAnswer})
         })
         setFetchTrigger(true)
         doFetch("/api/purchase")
@@ -39,6 +62,10 @@ export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain}){
         <>
             <span className="fw-bold h4 my-5">
                 Total cost = {cartCount * globalConstantsModule.ITEM_PRICE}$
+            </span>
+            <span className="my-2">
+                <Spinner isLoading={isLoadingCartIds} isSmall={true}/>
+                <Error error={errorCartIds}/>
             </span>
             <form className="form-floating my-2" onSubmit={handelSubmit}>
                 <div className="row text-start">
@@ -65,7 +92,7 @@ export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain}){
             </form>
             <span className="my-2">
                 <Spinner isLoading={isLoading} isSmall={true}/>
-                <Error error={error}/>
+                <Error error={stayingError? stayingError :error}/>
             </span>
         </>
     )

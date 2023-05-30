@@ -7,7 +7,7 @@ const GET_CART_COUNTER = "/api/cart/counter"
 
 const CounterProvider = ({ children }) => {
     const [cartCount, setCartCount] = useState(0)
-    const [isFetchAgain, setFetchAgain] = useState(true)
+    const [isFetchAgain, setFetchAgain] = useState(false)
     const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null, null, null)
 
 
@@ -23,10 +23,10 @@ const CounterProvider = ({ children }) => {
 
     useEffect(()=>{
         if (isFetchAgain){
-            console.log("Fetching")
-            doFetch(GET_CART_COUNTER)
-            setFetchTrigger(true)
+            console.log("Trying to fetch counter")
             setFetchAgain(false)
+            setFetchTrigger(true)
+            doFetch(GET_CART_COUNTER)
         }
 
     }, [isFetchAgain, doFetch, setFetchTrigger])
