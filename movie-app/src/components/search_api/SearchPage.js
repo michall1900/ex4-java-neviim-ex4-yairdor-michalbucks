@@ -1,10 +1,11 @@
-import {useReducer} from "react";
+import {useEffect, useReducer} from "react";
 import History from "./search_history/History";
 import SearchByAttribute from "./search_attributes/SearchByAttribute";
 import SearchByString from "./search_by_text/SearchByString";
 import BackToMainSearchButton from "./BackToMainSearchButton";
 import SearchButtons from "./SearchButtons";
 import CounterDisplay from "../CounterDisplay";
+import {useCartCounterProvider} from "../../contexts/CounterContext";
 
 
 const CLICKED_OPTIONS = {main:"MAIN_SEARCH",search_history:"HISTORY_SEARCH", search_by_free_text:"STRING_SEARCH",  search_by_attributes:"ATTRIBUTE_SEARCH"}
@@ -38,6 +39,10 @@ export default function SearchPage(){
 
     const [buttonClickedState,dispatchButton] = useReducer(clickedButtonReducer,
         {isHistoryClicked:false, isStringClicked:false, isAttributeClicked:false})
+    const {setFetchAgain} = useCartCounterProvider()
+    useEffect(()=>{
+        setFetchAgain(true);
+    },[setFetchAgain])
 
     return(
         <div className={"container"}>

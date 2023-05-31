@@ -1,4 +1,4 @@
-import {TiDeleteOutline} from "react-icons/ti";
+
 import {MdClear} from "react-icons/md";
 
 /**

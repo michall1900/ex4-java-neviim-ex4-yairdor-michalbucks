@@ -2,6 +2,12 @@ import React, {createContext, useState} from 'react';
 
 const HistoryItemContext = createContext();
 
+/**
+ * This component is handle with history items save.
+ * @param children
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const HistoryItemsProvider = ({ children }) => {
     const [historyItems, setHistoryItems] = useState({})
     const value = {historyItems, setHistoryItems}

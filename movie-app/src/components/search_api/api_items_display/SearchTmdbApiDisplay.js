@@ -44,6 +44,8 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
         event.preventDefault()
         let params = makeUrlSearchParams()
         let tvOrMoviePath = (tvOrMovie==="Movies")? globalConstantsModule.SEARCH_MOVIE: globalConstantsModule.SEARCH_SERIES
+        // setUrl(urlPrefix + tvOrMoviePath + globalConstantsModule.API_KEY+ globalConstantsModule.ADULT_FALSE +
+        //     `&${params.toString()}`)
         setUrl(urlPrefix + tvOrMoviePath + globalConstantsModule.API_KEY+ globalConstantsModule.ADULT_FALSE +
             `&${params.toString()}`)
         setIsSubmittedFirstTime(true)

@@ -75,6 +75,7 @@ export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain, setSt
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({"purchase": inputs, "ids":cartIdsAnswer})
+            //body: JSON.stringify({"purchase": {}, "ids":cartIdsAnswer})
         })
         setFetchTrigger(true)
         doFetch("/api/purchase")

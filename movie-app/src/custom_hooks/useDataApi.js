@@ -3,7 +3,7 @@ import {useState, useReducer, useEffect} from "react";
 const SERVER_ERROR_STRING = "Can't login to server. Please try again later."
 const CANT_FIND_SERVER_ERROR_CODE = 500
 const ERROR_MESSAGE = "There is a problem with getting response from the server, please try again later";
-
+const ERROR_INVALID_CHOICE = "Invalid choice for fetch"
 /**
  * Check the response. If there is an error, it throws it with description.
  * @param response Server's response.
@@ -31,49 +31,69 @@ const getErrorMessage = async (response) =>{
     try{
         text = await response.text();
         let jsonData = JSON.parse(text);
-        return (!!jsonData.errors)? jsonData.errors.join(", "): jsonData.status_message??ERROR_MESSAGE;
+        let errorString = "error: ";
+        for (const key in jsonData) {
+            errorString += `${key} - ${jsonData[key]}, `;
+        }
+        return (!!jsonData.errors)? jsonData.errors.join(", "): jsonData.status_message??errorString??ERROR_MESSAGE;
     }
     catch {
         return text??ERROR_MESSAGE;
     }
 }
+/**
+ * This is a reducer that handle with fetching. It's setting the loading, error, and data states.
+ * @param state
+ * @param action
+ * @returns {(*&{isLoading: boolean, error: null})|(*&{isLoading: boolean, data, error: null})|(*&{isLoading: boolean, error})}
+ * @throws Error: If the choice is invalid.
+ */
 const dataFetchReducer = (state,action)=>{
     switch (action.type){
         case globalConstantsModule.FETCH_INIT:{
-            console.log("Initialized fetch, isLoading-true, error - null")
+            //console.log("Initialized fetch, isLoading-true, error - null")
             return {...state, isLoading: true, error: null};
         }
         case globalConstantsModule.FETCH_SUCCESS:{
-            console.log("Initialized fetch, isLoading-false, data - ", action.data)
+            //console.log("Initialized fetch, isLoading-false, data - ", action.data)
             return {...state, isLoading: false, error: null, data:action.data};
         }
         case globalConstantsModule.FETCH_FAILURE:{
-            console.log("Fetch Failed, isLoading-false, Error- true", action.error)
+            //console.log("Fetch Failed, isLoading-false, Error- true", action.error)
             return {...state, isLoading: false, error: action.error};
         }
 
         default:
-            throw new Error("Invalid choice for fetch")
+            throw new Error(ERROR_INVALID_CHOICE)
     }
 }
-
+/**
+ * This custom hook handle with fetch requests.
+ * @param initialUrl The url to start with.
+ * @param initialData The initial data.
+ * @param initialContent The initial content ( headers)
+ * @returns {[S,((value: unknown) => void),((value: (((prevState: boolean) => boolean) | boolean)) => void),((value: unknown) => void)]}
+ */
 const useDataApi = (initialUrl,initialData, initialContent)=>{
-    console.log("use data api called/ rendered")
+    //console.log("use data api called/ rendered")
     const [url,setUrl] = useState(initialUrl);
     const [fetchState, dispatch] = useReducer(dataFetchReducer, { data:initialData, isLoading: false, error:null})
     const [content, setContent] = useState(initialContent)
     const [fetchTrigger, setFetchTrigger] = useState(false);
 
     useEffect(()=>{
-        // let didCancel = false
+        //let didCancel = false
         const fetchData = async ()=>{
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
                 const response = await fetch(url,content)
-                //console.log(didCancel, "after fetch, before json")
-                // if (!didCancel){
+
+                //console.log("STILL DOING THE JOB",didCancel, "after fetch, before json")
+                //if (!didCancel){
                     const jsonData = await checkResponse(response)
+                    //console.log("STILL DOING THE JOB")
                     dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
+                    //setFetchTrigger(false)
                 //}
 
             }
@@ -81,11 +101,15 @@ const useDataApi = (initialUrl,initialData, initialContent)=>{
                 //console.log(didCancel, "in error")
                 //if (!didCancel)
                     dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
+                        //setFetchTrigger(false)
+            }
+            finally {
+                //console.log("IN FINALLY")
             }
         }
-        console.log("Inside use data api effect, check if there is need to fetch")
+        //console.log("Inside use data api effect, check if there is need to fetch")
         if(!!url&& fetchTrigger) {
-            console.log("Fetching.. ",url, fetchTrigger)
+            //console.log("Fetching.. ",url, fetchTrigger)
             setFetchTrigger(false)
             fetchData();
         }

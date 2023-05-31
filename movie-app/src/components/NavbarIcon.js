@@ -1,5 +1,10 @@
 import logo1 from "../images/logo_ex4.jpg";
 
+/**
+ * This component display the NavbarIcon with an image.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function NavbarIcon(){
     return(
         <>

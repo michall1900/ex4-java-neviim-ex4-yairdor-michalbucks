@@ -1,4 +1,16 @@
+import {useCartCounterProvider} from "../contexts/CounterContext";
+import {useEffect} from "react";
+
+/**
+ * This component is handle with the display of the home page.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function HomePage(){
+    const {setFetchAgain} = useCartCounterProvider()
+    useEffect(()=>{
+        setFetchAgain(true);
+    },[setFetchAgain])
     const titleStyle = {
         fontFamily: 'Great Vibes, cursive',
         fontSize: '5rem',

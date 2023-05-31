@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Menu from "./components/Menu";

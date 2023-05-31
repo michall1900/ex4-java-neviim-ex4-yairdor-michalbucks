@@ -20,7 +20,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+/**
+ * <h2></h2>
+ * <div>
+ * </div>
+ * @author Yair Dor and Michal Bucks
+ * @version 1.0
+ * @since 2023-05-31
+ */
 @RestController
 @RequestMapping("/api")
 public class ApiController {

@@ -24,9 +24,12 @@ export default function CartPage(){
      * The effect handle with changed data - fetching the cart counter again.
      */
     useEffect(()=>{
-        setFetchAgain(true)
+        if (!!newData || !!errorNewData){
+            //console.log("Fetchingggggg again")
+            setFetchAgain(true)
+        }
 
-    },[newData, responseDeleteAll, setFetchAgain])
+    },[newData, responseDeleteAll, setFetchAgain, errorNewData])
 
     /**
      * This effect is handle with the case that delete all press success.
@@ -69,7 +72,7 @@ export default function CartPage(){
                 </div>)}
                 <div className="col-12 my-2">
                     {isLoadingDeleteAll? <Spinner isLoading={isLoadingDeleteAll} isSmall={true}/>:
-                        <ClearAllButton handleClick={handleDeleteAll}/>
+                        !!newData&& !!newData.length&&<ClearAllButton handleClick={handleDeleteAll}/>
                     }
                 </div>
                 <div className="col-12 my-2">
