@@ -1,10 +1,59 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/7Tmn2VQK)
 
 # Authors
-
+* Name: Yair Dor Email: yairdo@edu.hac.ac.il Id: 318169505
+* Name: Michal Bucks Email: michalbu@edu.hac.ac.il Id: 205980725
+* 
 # Explanations
 
----------------------
+<h2> Important: </h2>
+<div>
+    We used 3 extra days (and not suppose to lose points because of that). 
+</div>
+
+<h3>Valid routes</h3>
+<ul>
+    <li>
+        /api/purchase: There are 2 available methods:
+        <ul>
+            <li>
+                post - Receives purchase object (firstName — string with 0 &lt; length &lt;=30,
+                lastName - string with 0 &lt; length &lt;=30, and email -string with 0 &lt; length &lt;=30), and a set of ids
+                that the user is updated with (id is a string in this case). The json should look like that
+                {purchase:{firstName:___, lastName:___, email:___} ids:[&lt;id1;&gt;, &lt;id2&gt;,....]}.
+                If there is an error - the cart is empty/ the ids are not the same as in the cart, return
+                HttpStatus.BAD_REQUEST error description.
+            </li>
+            <li>
+                get - Return all the purchases in the database.
+            </li>
+        </ul>
+    </li>
+    <li>
+        /api/cart: There are multiple available methods:
+        <ul>
+            <li>
+                post - receives tmdb item with the parameters: id, date, name, posterPath, popularity,and overview
+                when id - required, and date - in yyyy-mm-dd format if exists. Returns ResponseEntity.ok(newItem).
+                If id or date are invalid, return HttpStatus.BAD_REQUEST with the relevant errors.
+            </li>
+            <li>
+                get- return all the cart's items (A map when the key is the item's id and the value is the item
+                itself).
+            </li>
+            <li>
+                delete - delete all the cart. Could throw HttpStatus.BAD_REQUEST if the cart is already empty.
+            </li>
+        </ul>
+    </li>
+    <li>
+        /api/cart/counter : A get request that returns the number of items in the cart.
+    </li>
+    <li>
+        /api/cart/item/{id} : A delete request that delete the wanted item's id. Throw HttpStatus.BAD_REQUEST
+        if the item is not existed.
+    </li>
+</ul>
 
 
 # Initializing the template

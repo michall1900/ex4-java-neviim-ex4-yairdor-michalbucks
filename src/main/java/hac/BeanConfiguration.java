@@ -9,8 +9,9 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
- * <h2></h2>
+ * <h2>BeanConfiguration</h2>
  * <div>
+ *      All the needed configurations.
  * </div>
  * @author Yair Dor and Michal Bucks
  * @version 1.0
@@ -18,18 +19,20 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 @Configuration
 public class BeanConfiguration {
-    @Bean
-    @SessionScope
-    public TmdbItem newTmdbItem(){
-        return new TmdbItem();
-    }
-
+    /**
+     *
+     * @return The cart in the session scope
+     */
     @Bean
     @SessionScope
     public TmdbCart newTmdbCart(){
         return new TmdbCart();
     }
 
+    /**
+     *
+     * @return A read write lock, global for the purchase db.
+     */
     @Bean
     @Scope
     public ReentrantReadWriteLock getDbLock(){

@@ -26,10 +26,12 @@ public class TmdbCart implements Serializable {
     /**A lock for the cart*/
     private ReentrantReadWriteLock readWriteLock;
 
-    /**An error message wht the deletion is done with exist item.*/
+    /**An error message telling the deletion is done with existed item.*/
     final private String ITEM_NOT_EXIST_ERROR = "You already delete this item";
+    /**An error message telling the item already exists.*/
     final private String ITEM_EXIST = "You already purchased this item";
 
+    /**An error message telling the cart is empty.*/
     final private String CART_EMPTY ="The cart is empty";
     /**
      * A default c-tor
