@@ -18,7 +18,7 @@ import Error from "../Error";
 export default function CheckoutForm ({setIsAfterPurchase , setFetchAgain, setStayingError, stayingError}){
     const {cartCount} = useCartCounterProvider();
     const [inputs, setInputs] = useState({})
-    const [{ data, isLoading, error}, doFetch, setFetchTrigger, setContent] = useDataApi()
+    const [{ data, isLoading, error}, doFetch, setFetchTrigger, setContent] = useDataApi(null, null, null, null)
     const {data:cartIdsAnswer, isLoading:isLoadingCartIds, error:errorCartIds, dispatchCartOperation} = useCartApi()
 
     /**

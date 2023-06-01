@@ -9,11 +9,27 @@ import DisplayReferringIds from "../DisplayReferringIds";
  * This component is handle with the display of tmdb items including the error messages/ the loading display and load
  * more button.
  * @param url The url to get the data from it.
+ * @param tvOrMovie for id to cart.
  * @returns {JSX.Element}
  * @constructor
  */
-export default function TmdbApiFetchResultsDisplay({url}){
-    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null)
+export default function TmdbApiFetchResultsDisplay({url, tvOrMovie}){
+    const isValidJson = (jsonData)=>{
+        console.log("In is valid json")
+        if (!jsonData || !jsonData.results)
+            return true;
+        else if (!Array.isArray(jsonData.results))
+            return false;
+        return jsonData.results.every((val)=> {
+            function isValidDateFormat(dateCheck) {
+                return (typeof dateCheck === 'string' || dateCheck instanceof String) &&
+                    /^\d{4}-\d{2}-\d{2}$/.test(dateCheck) && !isNaN(Date.parse(dateCheck));
+            }
+            let date =  val.first_air_date ?? val.release_date??null
+            return (((!!date&& isValidDateFormat(date)) || !date) && !!val.id)
+        })
+    }
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null,isValidJson)
     const [allData, setAllData] = useState(null)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
@@ -63,7 +79,7 @@ export default function TmdbApiFetchResultsDisplay({url}){
         <div className="row text-center my-2">
             <div className="col-12 my-2">
                 <Error error={error}/>
-                <DisplayReferringIds itemsData={allData} isBuyOption={true}/>
+                <DisplayReferringIds itemsData={allData} isBuyOption={true} tvOrMovie={tvOrMovie}/>
                 <Spinner isLoading={isLoading}/>
             </div>
             <LoadMoreButton handleLoadMore={handleLoadMore} page={page} maxPage={maxPage} allData={allData}/>

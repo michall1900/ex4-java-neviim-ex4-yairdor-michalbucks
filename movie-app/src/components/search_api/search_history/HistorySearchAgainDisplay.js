@@ -1,4 +1,5 @@
 import TmdbApiFetchResultsDisplay from "../api_items_display/TmdbApiFetchResultsDisplay";
+import {useHistory} from "../../../contexts/HistoryContext";
 
 /**
  * This component is handle with displaying the search again results + back to history list button.
@@ -8,7 +9,7 @@ import TmdbApiFetchResultsDisplay from "../api_items_display/TmdbApiFetchResults
  * @constructor
  */
 export default function HistorySearchAgainDisplay({setSearchClicked, url}){
-
+    const {history} = useHistory()
     return(
         <>
             <div className="col-12 my-2">
@@ -17,7 +18,7 @@ export default function HistorySearchAgainDisplay({setSearchClicked, url}){
                 </button>
             </div>
             <div className="col-12 text-center my-2">
-                <TmdbApiFetchResultsDisplay url={url}/>
+                <TmdbApiFetchResultsDisplay url={url} tvOrMovie={history.get(url).tvOrMovie}/>
             </div>
         </>
     )

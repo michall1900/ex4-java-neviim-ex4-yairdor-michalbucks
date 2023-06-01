@@ -13,9 +13,12 @@ const ERROR_MSG = 'useCartCounterProvider must be used within a CounterProvider'
  * @constructor
  */
 const CounterProvider = ({ children }) => {
+    const isValidJsonData= (jsonObj)=>{
+        return(jsonObj!==null && jsonObj!== undefined && !Number.isNaN(jsonObj) && Number.isInteger(jsonObj) && (+jsonObj)>=0)
+    }
     const [cartCount, setCartCount] = useState(0)
     const [isFetchAgain, setFetchAgain] = useState(false)
-    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null, null, null)
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null, null, null, isValidJsonData)
 
 
     const value = {isLoading, error, setFetchAgain,cartCount}
@@ -24,7 +27,7 @@ const CounterProvider = ({ children }) => {
      * to update the counter in data changes.
      */
     useEffect(()=>{
-        if (!error && !!data && !Number.isNaN(data) && Number.isInteger(data) && (+data)>=0){
+        if (!error && data!==null && data!== undefined){
             setCartCount(!!data? +data:0)
         }
 

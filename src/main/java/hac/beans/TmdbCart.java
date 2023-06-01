@@ -164,8 +164,7 @@ public class TmdbCart implements Serializable {
             }
             this.cart = new HashMap<>();
         } finally {
-            if (!readWriteLock.isWriteLockedByCurrentThread())
-                readWriteLock.writeLock().unlock();
+            readWriteLock.writeLock().unlock();
         }
     }
 

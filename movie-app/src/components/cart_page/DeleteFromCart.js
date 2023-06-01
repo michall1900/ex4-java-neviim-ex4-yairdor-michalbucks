@@ -1,6 +1,6 @@
 import useCartApi from "../../custom_hooks/useCartApi";
-import {BiMessageError} from "react-icons/bi";
 import {useEffect} from "react";
+import ResponsiveButton from "../ResponsiveButton";
 
 /**
  * This component handle with pressing on delete button from cart.
@@ -32,27 +32,9 @@ export default function DeleteFromCart({itemData, setIsClicked}){
      * Handle with displaying the error message on the button.
      * @returns {string}
      */
-    const handleIconHover = () => {
-        if (error) {
-            return error + ". Try again later..";
-        }
-        return '';
-    };
     return(
-        <>
-            {isLoading ?
-                (<button className="btn btn-primary btn-sm" type="button" disabled="">
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Loading...
-                </button>) :
-                    <button className="btn btn-danger btn-sm" onClick={isLoading ? "" : handelDelete}>
-                        Delete
-                        {!!error &&
-                            (<span className="text-danger">
-                            <BiMessageError title ={handleIconHover()}/>
-                        </span>)}
-                    </button>}
-        </>
+        <ResponsiveButton btnClassName="btn-danger btn-sm" isLoading={isLoading} error={error}
+        buttonName="Delete" handleClick={handelDelete}/>
 
     )
 }

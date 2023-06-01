@@ -3,7 +3,7 @@
 # Authors
 * Name: Yair Dor Email: yairdo@edu.hac.ac.il Id: 318169505
 * Name: Michal Bucks Email: michalbu@edu.hac.ac.il Id: 205980725
-* 
+
 # Explanations
 
 <h2> Important: </h2>

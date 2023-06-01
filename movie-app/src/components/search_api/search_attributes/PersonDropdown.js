@@ -17,7 +17,14 @@ import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
  * @constructor
  */
 export default function PersonDropdown({setSearchTerm, isDropdownOpen, setDropdownOpen, searchTerm, setInputs}){
-    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null)
+    const isValidPersonObject = (jsonObj)=>{
+        if (!jsonObj || !jsonObj.results)
+            return true;
+        else if (!Array.isArray(jsonObj.results))
+            return false;
+        return jsonObj.results.every((val)=> !!val.id)
+    }
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null, isValidPersonObject)
     const {setHistoryItems} = useHistoryItems()
 
     /**

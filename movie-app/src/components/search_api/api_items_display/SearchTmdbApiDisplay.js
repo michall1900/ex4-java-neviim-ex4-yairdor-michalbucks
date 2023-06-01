@@ -61,7 +61,8 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
                 .join(', ');
         return {
             request: `${url}`,
-            details: `${tvOrMovie}, ${objectString}`
+            details: `${tvOrMovie}, ${objectString}`,
+            tvOrMovie:tvOrMovie
         }
     },[ tvOrMovie, url, historyItems])
 
@@ -81,7 +82,7 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
         <>
             <SearchForm setTvOrMovie={setTvOrMovie} tvOrMovie={tvOrMovie} handleSubmit={handleSubmit} isByText={isByText}
                         inputs={inputs} setInputs={setInputs}/>
-            <TmdbApiFetchResultsDisplay url={url}/>
+            <TmdbApiFetchResultsDisplay url={url} tvOrMovie={tvOrMovie}/>
         </>
 
     )

@@ -8,10 +8,11 @@ import DisplayDataApi from "./api_items_display/DisplayDataApi";
  * This component is displaying the search results by referring to the ids
  * @param itemsData - the items' list
  * @param isBuyOption - a boolean says if it is with buy option or not.
+ * @param tvOrMovie for id to cart.
  * @returns {JSX.Element}
  * @constructor
  */
-export default function DisplayReferringIds({itemsData, isBuyOption}){
+export default function DisplayReferringIds({itemsData, isBuyOption, tvOrMovie}){
     const {data, isLoading, error, dispatchCartOperation} = useCartApi()
     const [isClicked, setIsClicked] = useState(true)
 
@@ -34,7 +35,8 @@ export default function DisplayReferringIds({itemsData, isBuyOption}){
                 </div>
             )}
             <div className="col-12 my-2">
-                <DisplayDataApi itemsData={itemsData} isBuyOption={isBuyOption} idsData = {data} setIsClicked={setIsClicked}/>
+                <DisplayDataApi itemsData={itemsData} isBuyOption={isBuyOption} idsData = {data}
+                                setIsClicked={setIsClicked} tvOrMovie={tvOrMovie}/>
             </div>
         </div>
     )

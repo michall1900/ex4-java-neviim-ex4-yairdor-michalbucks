@@ -4,6 +4,7 @@ import useDataApi from "../../../custom_hooks/useDataApi";
 import globalConstantsModule from "../../../utilities/globalConstantsModule";
 import Error from "../../Error";
 import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
+import Spinner from "../../Spinner";
 
 /**
  * This component handles with select genre select component.
@@ -13,7 +14,14 @@ import {useHistoryItems} from "../../../contexts/HistoryItemsContext";
  * @constructor
  */
 const SelectGenre = ({setInputs, tvOrMovie}) => {
-    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null)
+    const isValidListObject = (jsonObj)=>{
+        if (!jsonObj || !jsonObj.genres)
+            return true;
+        else if (!Array.isArray(jsonObj.genres))
+            return false;
+        return jsonObj.genres.every((val)=> !!val.id && !!val.name)
+    }
+    const [{data, isLoading, error}, doFetch, setFetchTrigger] = useDataApi(null,null,null, isValidListObject)
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [labels, setLabels] = useState([])
 
@@ -82,21 +90,22 @@ const SelectGenre = ({setInputs, tvOrMovie}) => {
             <div className="fw-bolder">
                 <div>Select Genres</div>
             </div>
-            {(!!data) && (data.genres)?
-                (
-                    <Select
-                        isMulti
-                        options={labels}
-                        value={selectedGenres}
-                        onChange={setSelectedGenres}
-                        isLoading={isLoading}
-                        closeMenuOnSelect={false}
-                        placeholder="Search By Genres"
-                    />
-                ):
-                <div className="my-2">
-                    <Error error={(error && error.length)? "Error: Cannot load genres from TMDB":null}/>
-                </div>
+            {isLoading ? <Spinner isLoading={isLoading} isSmall={true}/> :
+                (!!data) && (data.genres)?
+                    (
+                        <Select
+                            isMulti
+                            options={labels}
+                            value={selectedGenres}
+                            onChange={setSelectedGenres}
+                            isLoading={isLoading}
+                            closeMenuOnSelect={false}
+                            placeholder="Search By Genres"
+                        />
+                    ):
+                    <div className="my-2">
+                        <Error error={(error && error.length)? "Error: Cannot load genres from TMDB":null}/>
+                    </div>
 
             }
 

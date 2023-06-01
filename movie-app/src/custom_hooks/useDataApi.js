@@ -4,6 +4,7 @@ const SERVER_ERROR_STRING = "Can't login to server. Please try again later."
 const CANT_FIND_SERVER_ERROR_CODE = 500
 const ERROR_MESSAGE = "There is a problem with getting response from the server, please try again later";
 const ERROR_INVALID_CHOICE = "Invalid choice for fetch"
+const INVALID_JSON_ERROR = "The response from the server is invalid."
 /**
  * Check the response. If there is an error, it throws it with description.
  * @param response Server's response.
@@ -71,55 +72,65 @@ const dataFetchReducer = (state,action)=>{
  * This custom hook handle with fetch requests.
  * @param initialUrl The url to start with.
  * @param initialData The initial data.
- * @param initialContent The initial content ( headers)
+ * @param initialContent The initial content (headers)
+ * @param isValidJson A function that checking the received json.Should return true if the json is valid,otherwise-false.
  * @returns {[S,((value: unknown) => void),((value: (((prevState: boolean) => boolean) | boolean)) => void),((value: unknown) => void)]}
  */
-const useDataApi = (initialUrl,initialData, initialContent)=>{
+const useDataApi = (initialUrl,initialData, initialContent, isValidJson)=>{
     //console.log("use data api called/ rendered")
     const [url,setUrl] = useState(initialUrl);
     const [fetchState, dispatch] = useReducer(dataFetchReducer, { data:initialData, isLoading: false, error:null})
     const [content, setContent] = useState(initialContent)
     const [fetchTrigger, setFetchTrigger] = useState(false);
+    const [checkIfValidJson, setCheckIsValidJson] = useState(()=>isValidJson)
 
     useEffect(()=>{
-        //let didCancel = false
+        let didCancel = false
         const fetchData = async ()=>{
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
                 const response = await fetch(url,content)
 
-                //console.log("STILL DOING THE JOB",didCancel, "after fetch, before json")
-                //if (!didCancel){
+                console.log("STILL DOING THE JOB",didCancel, "after fetch, before json", url)
+                if (!didCancel){
                     const jsonData = await checkResponse(response)
-                    //console.log("STILL DOING THE JOB")
-                    dispatch({type:globalConstantsModule.FETCH_SUCCESS, data:jsonData})
-                    //setFetchTrigger(false)
-                //}
+                    console.log(checkIfValidJson)
+                    if (!didCancel) {
+                        if (!checkIfValidJson || checkIfValidJson(jsonData)) {
+                            console.log("updating - success",url)
+                            dispatch({type: globalConstantsModule.FETCH_SUCCESS, data: jsonData})
+                        } else
+                            throw new Error(INVALID_JSON_ERROR)
+                        //setFetchTrigger(false)
+                    }
+                }
 
             }
             catch(error){
-                //console.log(didCancel, "in error")
-                //if (!didCancel)
+                console.log(didCancel, "in error", url)
+                if (!didCancel)
                     dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
-                        //setFetchTrigger(false)
+                //setFetchTrigger(false)
             }
             finally {
-                //console.log("IN FINALLY")
+                console.log("IN FINALLY", url)
+                //setFetchTrigger(false)
             }
         }
         //console.log("Inside use data api effect, check if there is need to fetch")
-        if(!!url&& fetchTrigger) {
-            //console.log("Fetching.. ",url, fetchTrigger)
-            setFetchTrigger(false)
+        if(!!url && fetchTrigger) {
+        //if (!!url){
+            console.log("Fetching.. ",url, fetchTrigger)
+            //setFetchTrigger(false)
             fetchData();
         }
-        // return () => {
-        //     console.log("did cancel true on exit")
-        //     didCancel = true;
-        // };
-    }, [url, content, fetchTrigger])
+        return () => {
+            console.log("did cancel true on exit" , url)
+            didCancel = true;
+        };
+    }, [url, content, fetchTrigger, checkIfValidJson])
 
-    return [fetchState, setUrl, setFetchTrigger, setContent]
+    return [fetchState, setUrl, setFetchTrigger, setContent, setCheckIsValidJson]
 }
 
 export default useDataApi;

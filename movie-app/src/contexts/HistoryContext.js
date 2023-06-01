@@ -14,7 +14,7 @@ const historyReducer = (history, action) => {
     switch (action.type) {
         case 'ADD': {
             const newHistory = new Map(history)
-            newHistory.set(action.item.request, action.item.details);
+            newHistory.set(action.item.request, {details: action.item.details, tvOrMovie:action.item.tvOrMovie});
             //console.log("history add - ", action.item.request, action.item.details)
             return newHistory;
         }

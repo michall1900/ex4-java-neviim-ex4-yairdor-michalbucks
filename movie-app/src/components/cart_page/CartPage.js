@@ -1,5 +1,4 @@
 import CounterDisplay from "../CounterDisplay";
-import ClearAllButton from "../search_api/ClearAllButton";
 import useCartApi from "../../custom_hooks/useCartApi";
 import {useCartCounterProvider} from "../../contexts/CounterContext";
 import {useEffect, useState} from "react";
@@ -7,6 +6,8 @@ import Spinner from "../Spinner";
 import Error from "../Error";
 import DisplayDataApi from "../search_api/api_items_display/DisplayDataApi";
 import globalConstantsModule from "../../utilities/globalConstantsModule";
+import ResponsiveButton from "../ResponsiveButton";
+import {BsTrash} from "react-icons/bs";
 
 /**
  * This Component is handle with cart page display.
@@ -54,7 +55,8 @@ export default function CartPage(){
      * This function is handle with pressing on delete all
      */
     const handleDeleteAll =()=>{
-        dispatchDeleteAll({type:"DELETE_ALL"})
+        if (!isLoadingDeleteAll)
+            dispatchDeleteAll({type:"DELETE_ALL"})
     }
 
     return(
@@ -71,12 +73,9 @@ export default function CartPage(){
                     Total cost = {cartCount * globalConstantsModule.ITEM_PRICE}$
                 </div>)}
                 <div className="col-12 my-2">
-                    {isLoadingDeleteAll? <Spinner isLoading={isLoadingDeleteAll} isSmall={true}/>:
-                        !!newData&& !!newData.length&&<ClearAllButton handleClick={handleDeleteAll}/>
-                    }
-                </div>
-                <div className="col-12 my-2">
-                    <Error error={errorDeleteAll}/>
+                    {!!cartCount &&<ResponsiveButton handleClick={handleDeleteAll} isLoading={isLoadingDeleteAll}
+                                                      buttonName="Clear All" btnClassName="btn-primary btn-sm"
+                                                      icon={<BsTrash/>} error={errorDeleteAll}/>}
                 </div>
                 <div className="col-12 my-2">
                     {isLoadingNewData && <Spinner isLoading={isLoadingNewData} isSmall={true}/>}

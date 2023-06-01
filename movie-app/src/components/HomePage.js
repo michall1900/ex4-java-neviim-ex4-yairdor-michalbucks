@@ -1,13 +1,15 @@
 import {useCartCounterProvider} from "../contexts/CounterContext";
-import {useEffect} from "react";
-
+import {useEffect, useState} from "react";
+let i=1
 /**
  * This component is handle with the display of the home page.
  * @returns {JSX.Element}
  * @constructor
  */
 export default function HomePage(){
+
     const {setFetchAgain} = useCartCounterProvider()
+
     useEffect(()=>{
         setFetchAgain(true);
     },[setFetchAgain])
