@@ -19,15 +19,17 @@ export default function CartPage(){
         dispatchCartOperation:dispatchDeleteAll} = useCartApi()
     const {data:newData, isLoading: isLoadingNewData, error: errorNewData, dispatchCartOperation:dispatchNewData} = useCartApi()
     const {error:errorCount, isLoading:isLoadingCount, cartCount, setFetchAgain} = useCartCounterProvider()
-    const [isClicked, setIsClicked] = useState(true);
-
+    const [isClicked, setIsClicked] = useState(false);
+    useEffect(()=>{
+        dispatchNewData({type: "GET_ITEMS"})
+    },[dispatchNewData])
     /**
      * The effect handle with changed data - fetching the cart counter again.
      */
     useEffect(()=>{
         if (!!newData || !!errorNewData){
-            //console.log("Fetchingggggg again")
             setFetchAgain(true)
+            setIsClicked(false)
         }
 
     },[newData, responseDeleteAll, setFetchAgain, errorNewData])
@@ -36,7 +38,7 @@ export default function CartPage(){
      * This effect is handle with the case that delete all press success.
      */
     useEffect(()=>{
-        if (responseDeleteAll){
+        if (!!responseDeleteAll){
             dispatchNewData({type: "GET_ITEMS"})
         }
     }, [responseDeleteAll, dispatchNewData])
@@ -47,7 +49,6 @@ export default function CartPage(){
     useEffect(()=>{
         if(isClicked){
             dispatchNewData({type: "GET_ITEMS"})
-            setIsClicked(false)
         }
     },[isClicked, dispatchNewData, setIsClicked])
 

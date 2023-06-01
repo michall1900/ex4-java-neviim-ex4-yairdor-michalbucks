@@ -15,7 +15,6 @@ import DisplayReferringIds from "../DisplayReferringIds";
  */
 export default function TmdbApiFetchResultsDisplay({url, tvOrMovie}){
     const isValidJson = (jsonData)=>{
-        console.log("In is valid json")
         if (!jsonData || !jsonData.results)
             return true;
         else if (!Array.isArray(jsonData.results))

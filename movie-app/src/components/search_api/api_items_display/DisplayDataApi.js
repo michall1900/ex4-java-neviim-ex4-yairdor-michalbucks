@@ -15,8 +15,8 @@ export default function DisplayDataApi({itemsData, isBuyOption, idsData, setIsCl
     return(
         <ul className="list-group text-center">
             {itemsData && itemsData.map((value, key) =>
-                <li className="list-group-item bg-light bg-opacity-75" key={key}>
-                    <MovieAndSeriesItem value={value} index={key}/>
+                <li className="list-group-item bg-light bg-opacity-75" key={`${tvOrMovie}.${value.id.toString()}`}>
+                    <MovieAndSeriesItem value={value} index={`${tvOrMovie}.${value.id.toString()}`}/>
                     <PriceRow itemData={value} setIsClicked={setIsClicked} isBuyOption = {isBuyOption}
                               isInCart={idsData && idsData.includes(`${tvOrMovie}.${value.id.toString()}`)}
                               tvOrMovie={tvOrMovie}/>

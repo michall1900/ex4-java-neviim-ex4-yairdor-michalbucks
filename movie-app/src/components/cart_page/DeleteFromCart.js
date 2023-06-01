@@ -16,7 +16,7 @@ export default function DeleteFromCart({itemData, setIsClicked}){
      * Effect that is handle with success deletion.
      */
     useEffect(()=>{
-        if (!!data && !error){
+        if (!!data){
             setIsClicked(true)
         }
 

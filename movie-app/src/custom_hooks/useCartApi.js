@@ -16,13 +16,12 @@ const validateItems = (jsonObj)=>{
     if (!jsonObj)
         return true;
     return [...Object.entries(jsonObj)].every(([key, value])=> {
-        console.log(key,value)
         function isValidDateFormat(dateCheck) {
             return (typeof dateCheck === 'string' || dateCheck instanceof String) &&
                 /^\d{4}-\d{2}-\d{2}$/.test(dateCheck) && !isNaN(Date.parse(dateCheck));
         }
 
-        return key && (key.startsWith("Movies.") || key.startsWith("Series.")) && key === value.id &&
+        return key && /^(Movies\.|Series\.)\d+$/.test(key) && key === value.id &&
         (!value.date || (isValidDateFormat(value.date)))
     })
 }
@@ -75,7 +74,6 @@ const counterReducer = (state, action) => {
  * @returns {{isLoading: *, dispatchCartOperation: () => void, data: *, error: *}}
  */
 const useCartApi = ()=>{
-    //console.log('use cart api called and render again')
     const [cartOperation, dispatchCartOperation] =  useReducer(counterReducer, {url:null, content: null, validFunc:null});
     const [{data, isLoading, error}, doFetch, setFetchTrigger, setContent, setCheckIsValidJson] = useDataApi(null, null, null,null);
 

@@ -10,6 +10,12 @@
 <div>
     We used 3 extra days (and not suppose to lose points because of that). 
 </div>
+<div>
+    We have load more button in search pages.
+</div>
+<div>
+    Important: a valid tmdbItem's id is key with this pattern: "/^(Movies\.|Series\.)\d+$/"
+</div>
 
 <h3>Valid routes</h3>
 <ul>

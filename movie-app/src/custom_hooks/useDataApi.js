@@ -52,15 +52,12 @@ const getErrorMessage = async (response) =>{
 const dataFetchReducer = (state,action)=>{
     switch (action.type){
         case globalConstantsModule.FETCH_INIT:{
-            //console.log("Initialized fetch, isLoading-true, error - null")
             return {...state, isLoading: true, error: null};
         }
         case globalConstantsModule.FETCH_SUCCESS:{
-            //console.log("Initialized fetch, isLoading-false, data - ", action.data)
             return {...state, isLoading: false, error: null, data:action.data};
         }
         case globalConstantsModule.FETCH_FAILURE:{
-            //console.log("Fetch Failed, isLoading-false, Error- true", action.error)
             return {...state, isLoading: false, error: action.error};
         }
 
@@ -85,49 +82,27 @@ const useDataApi = (initialUrl,initialData, initialContent, isValidJson)=>{
     const [checkIfValidJson, setCheckIsValidJson] = useState(()=>isValidJson)
 
     useEffect(()=>{
-        let didCancel = false
         const fetchData = async ()=>{
             dispatch({type:globalConstantsModule.FETCH_INIT})
             try{
                 const response = await fetch(url,content)
-
-                console.log("STILL DOING THE JOB",didCancel, "after fetch, before json", url)
-                if (!didCancel){
                     const jsonData = await checkResponse(response)
-                    console.log(checkIfValidJson)
-                    if (!didCancel) {
-                        if (!checkIfValidJson || checkIfValidJson(jsonData)) {
-                            console.log("updating - success",url)
-                            dispatch({type: globalConstantsModule.FETCH_SUCCESS, data: jsonData})
-                        } else
-                            throw new Error(INVALID_JSON_ERROR)
-                        //setFetchTrigger(false)
-                    }
-                }
 
+                        if (!checkIfValidJson || checkIfValidJson(jsonData)) {
+
+                            dispatch({type: globalConstantsModule.FETCH_SUCCESS, data: jsonData})
+                        }
+                        else
+                            throw new Error(INVALID_JSON_ERROR)
             }
             catch(error){
-                console.log(didCancel, "in error", url)
-                if (!didCancel)
-                    dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
-                //setFetchTrigger(false)
-            }
-            finally {
-                console.log("IN FINALLY", url)
-                //setFetchTrigger(false)
+                dispatch({type:globalConstantsModule.FETCH_FAILURE, error:error.message??ERROR_MESSAGE})
             }
         }
-        //console.log("Inside use data api effect, check if there is need to fetch")
         if(!!url && fetchTrigger) {
-        //if (!!url){
-            console.log("Fetching.. ",url, fetchTrigger)
-            //setFetchTrigger(false)
+            setFetchTrigger(false)
             fetchData();
         }
-        return () => {
-            console.log("did cancel true on exit" , url)
-            didCancel = true;
-        };
     }, [url, content, fetchTrigger, checkIfValidJson])
 
     return [fetchState, setUrl, setFetchTrigger, setContent, setCheckIsValidJson]

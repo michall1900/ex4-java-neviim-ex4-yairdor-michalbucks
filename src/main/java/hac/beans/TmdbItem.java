@@ -2,6 +2,7 @@ package hac.beans;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +24,7 @@ public class TmdbItem implements Serializable {
     /**For the id, couldn't be null*/
     @NotEmpty(message = "Id is mandatory")
     @NotNull(message = "Id is mandatory")
+    @Pattern(regexp = "^(Movies\\.|Series\\.)\\d+$", message = "Id must start with 'Movies.' or 'Series.' followed by digits only")
     private String id;
     /**For the name of the series*/
     private String name;
@@ -61,6 +63,7 @@ public class TmdbItem implements Serializable {
         }
 
     }
+
 
     /**
      * A constructor that receives all data.
