@@ -18,7 +18,7 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
     const [inputs, setInputs] = useState({})
     const {historyItems} = useHistoryItems()
     const [isSubmittedFirstTime, setIsSubmittedFirstTime] = useState(false)
-
+    const [sendTvOrMovie, setSendTvOrMovie] = useState("Movies")
     const {dispatchHistory} = useHistory()
 
 
@@ -48,6 +48,7 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
         //     `&${params.toString()}`)
         setUrl(urlPrefix + tvOrMoviePath + globalConstantsModule.API_KEY+ globalConstantsModule.ADULT_FALSE +
             `&${params.toString()}`)
+        setSendTvOrMovie(tvOrMovie)
         setIsSubmittedFirstTime(true)
     }
     /**
@@ -82,7 +83,7 @@ export default function SearchTmdbApiDisplay({urlPrefix, isByText}){
         <>
             <SearchForm setTvOrMovie={setTvOrMovie} tvOrMovie={tvOrMovie} handleSubmit={handleSubmit} isByText={isByText}
                         inputs={inputs} setInputs={setInputs}/>
-            <TmdbApiFetchResultsDisplay url={url} tvOrMovie={tvOrMovie}/>
+            <TmdbApiFetchResultsDisplay url={url} tvOrMovie={sendTvOrMovie}/>
         </>
 
     )

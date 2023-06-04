@@ -12,7 +12,7 @@ export default function SearchByAttribute(){
     return(
         <>
             <h3>
-                Search by free text
+                Search by Attributes
             </h3>
             <HistoryItemsProvider>
                 <SearchTmdbApiDisplay isByText={false} urlPrefix={URL_PREFIX}/>

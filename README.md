@@ -16,6 +16,9 @@
 <div>
     Important: a valid tmdbItem's id is key with this pattern: "/^(Movies\.|Series\.)\d+$/"
 </div>
+<div>
+    Solange gave as permission to submit again today(4.6.23) because of a little bug without loosing points.
+</div>
 
 <h3>Valid routes</h3>
 <ul>

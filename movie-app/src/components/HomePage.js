@@ -1,6 +1,6 @@
 import {useCartCounterProvider} from "../contexts/CounterContext";
-import {useEffect, useState} from "react";
-let i=1
+import {useEffect} from "react";
+
 /**
  * This component is handle with the display of the home page.
  * @returns {JSX.Element}
@@ -19,6 +19,7 @@ export default function HomePage(){
         color: '#ff69b4',
         textShadow: '2px 2px 0 #fff, 4px 4px 0 #f7d5d5, 6px 6px 0 #ff69b4',
     };
+
     return(
         <div className="container">
             <h1 className="text-center fw-bolder fst-italic my-2">
